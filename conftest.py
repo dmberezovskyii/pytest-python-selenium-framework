@@ -13,33 +13,39 @@ def get_driver_path(driver_name="chromedriver"):
     return driver_path
 
 
-@pytest.fixture(scope="session", autouse=True)
-def make_driver() -> webdriver.Remote:
-    driver = None
+def create_driver():
+    opts = webdriver.ChromeOptions()
+    # ... (options setup)
+    # opts.add_argument("--headless")
+    opts.add_argument("--disable-dev-shm-usage")
+    opts.add_argument("--no-sandbox")
 
-    def _make_driver() -> webdriver.Remote:
-        nonlocal driver
-        opts = webdriver.ChromeOptions()
-        # opts.add_argument("--headless")
-        opts.add_argument("--disable-dev-shm-usage")
-        opts.add_argument("--no-sandbox")
+    try:
+        driver = webdriver.Chrome(
+            executable_path=ChromeDriverManager().install(), options=opts
+        )
+    except Exception as e:
+        print(f"Failed to install ChromeDriver: {e}")
+        driver = webdriver.Chrome(executable_path=get_driver_path(), options=opts)
+    driver.maximize_window()
+    return driver
 
-        try:
-            driver = webdriver.Chrome(
-                executable_path=ChromeDriverManager().install(), options=opts
-            )
-        except Exception as e:
-            print(f"Failed to install ChromeDriver: {e}")
-            driver = webdriver.Chrome(executable_path=get_driver_path(), options=opts)
 
-        return driver
-
-    yield _make_driver
-
+def quit_driver(driver):
     if driver is not None:
         driver.quit()
 
 
-def test_example(make_driver):
-    driver = make_driver()
-    driver.get("https://softjourn.com")
+@pytest.fixture(scope="session", autouse=True)
+def make_driver(request) -> webdriver.Remote:
+    driver = None
+
+    def _make_driver() -> webdriver.Remote:
+        nonlocal driver
+        driver = (
+            create_driver()
+        )  # Use the utility function to create the driver instance
+        return driver
+
+    yield _make_driver()
+    quit_driver(driver)  # Use the utility function to quit the driver
