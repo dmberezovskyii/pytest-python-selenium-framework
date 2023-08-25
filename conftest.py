@@ -1,5 +1,4 @@
 import os
-from contextlib import contextmanager
 
 import pytest
 from selenium import webdriver
@@ -61,9 +60,7 @@ def make_driver(request) -> webdriver.Remote:
 
 # Command line options to specify the browser version
 def pytest_addoption(parser):
-    parser.addoption(
-        "--browser-version", action="store", default="116", help="Specify the browser version"
-    )
+    parser.addoption("--browser-version", action="store", default="116", help="Specify the browser version")
 
 
 @pytest.fixture(scope="session")

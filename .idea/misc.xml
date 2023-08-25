@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Black">
-    <option name="enabledOnReformat" value="true" />
-    <option name="enabledOnSave" value="true" />
     <option name="pathToExecutable" value="/Library/Frameworks/Python.framework/Versions/3.11/bin/black" />
     <option name="sdkUUID" value="5a2fe05a-f75d-49f6-b35b-122e821fcfc6" />
   </component>
