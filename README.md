@@ -10,4 +10,4 @@
 | 4. secrets                                    | ![Status](https://img.shields.io/badge/TODO-yellow)      |
 | 5. utilities: yaml_reader, logger             | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
 | 6. BasePage: wait strategy, base actions      | ![Status](https://img.shields.io/badge/DONE-brightgreen) |
-| 7. CI:                                        | ![Status](https://img.shields.io/badge/TODO-yellow)      |
+| 7. CI: GitHub Actions                                       | ![Status](https://img.shields.io/badge/TODO-yellow)      |
