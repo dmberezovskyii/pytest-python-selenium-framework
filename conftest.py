@@ -4,6 +4,10 @@ import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
+from utils.logger import Logger, LogLevel
+
+log = Logger(log_lvl=LogLevel.DEBUG).get_instance()
+
 
 # Initialize the WebDriver options
 def init_driver_options():
@@ -12,6 +16,7 @@ def init_driver_options():
     # opts.add_argument("--headless")
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--no-sandbox")
+    log.info(f'Driver options {opts.arguments}')
     return opts
 
 
@@ -28,6 +33,7 @@ def create_driver():
             executable_path=get_driver_path(), options=init_driver_options()
         )
     driver.maximize_window()
+    log.info(f'Driver created with session: {driver}')
     return driver
 
 
