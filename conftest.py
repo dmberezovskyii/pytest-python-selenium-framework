@@ -4,7 +4,9 @@ import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
+from utils.driver_util import WebDriverFactory
 from utils.logger import Logger, LogLevel
+
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
@@ -21,12 +23,14 @@ def init_driver_options():
 
 
 # Create a function to create the WebDriver instance
-def create_driver():
+def create_driver(browser_type="chrome"):
     try:
-        driver = webdriver.Chrome(
-            executable_path=ChromeDriverManager().install(),
-            options=init_driver_options(),
-        )
+        if browser_type == ['local','chrome']:
+            driver = create_local_chrome_driver()
+        elif browser_type == 'remote':
+            driver = create_remote_driver()
+        else:
+            raise ValueError(f"Unsupported browser type: {browser_type}")
     except Exception as e:
         print(f"Failed to install ChromeDriver: {e}")
         driver = webdriver.Chrome(
@@ -34,6 +38,37 @@ def create_driver():
         )
     driver.maximize_window()
     log.info(f'Driver created with session: {driver}')
+    return driver
+
+
+def create_local_chrome_driver():
+    try:
+        driver = webdriver.Chrome(
+            executable_path=ChromeDriverManager().install(),
+            options=init_driver_options(),
+        )
+    except Exception as e:
+        log.error(f"Failed to install ChromeDriver: {e}")
+        driver = webdriver.Chrome(
+            executable_path=get_driver_path(), options=init_driver_options()
+        )
+    driver.maximize_window()
+    log.info(f'Local Chrome driver created with session: {driver}')
+    return driver
+
+
+def create_remote_driver():
+    desired_caps = {}
+    try:
+        driver = webdriver.Remote(
+            command_executor="http://localhost:4444/wd/hub",
+            desired_capabilities=desired_caps,
+        )
+    except Exception as e:
+        log.error(f"Failed to connect for Remote driver: {e}")
+
+    driver.maximize_window()
+    log.info(f'Remote Chrome driver created with session: {driver}')
     return driver
 
 
@@ -57,7 +92,8 @@ def make_driver(request) -> webdriver.Remote:
 
     def _make_driver() -> webdriver.Remote:
         nonlocal driver
-        driver = create_driver()
+        driver = WebDriverFactory().create_driver('local')
+        # driver = create_driver(request)
         return driver
 
     yield _make_driver()
@@ -67,8 +103,4 @@ def make_driver(request) -> webdriver.Remote:
 # Command line options to specify the browser version
 def pytest_addoption(parser):
     parser.addoption("--browser-version", action="store", default="116", help="Specify the browser version")
-
-
-@pytest.fixture(scope="session")
-def browser_version(request):
-    return request.config.getoption("--browser-version", "116")
+    parser.addoption("--browser-type", action="store", default="local", help="Specify the browser type")
