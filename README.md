@@ -5,7 +5,7 @@
 | Item                                          | Status                                                   |
 |-----------------------------------------------|----------------------------------------------------------|
 | 1. drivers factory: local, remote, [chrome, firefox] | ![Status](https://img.shields.io/badge/TODO-yellow)      |
-| 2. pytest.ini config: addopts, errors, markers | ![Status](https://img.shields.io/badge/IN PROGRESS-blue)      |
+| 2. pytest.ini config: addopts, errors, markers | ![Status](https://img.shields.io/badge/PROGRESS-blue)      |
 | 3. environments: dev, stag, prod              | ![Status](https://img.shields.io/badge/TODO-yellow)      |
 | 4. secrets                                    | ![Status](https://img.shields.io/badge/TODO-yellow)      |
 | 5. utilities: yaml_reader, logger             | ![Status](https://img.shields.io/badge/DONE-yellow)      |
