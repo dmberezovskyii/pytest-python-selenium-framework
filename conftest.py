@@ -6,7 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from utils.logger import Logger, LogLevel
 
-log = Logger(log_lvl=LogLevel.DEBUG).get_instance()
+log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 
 # Initialize the WebDriver options
