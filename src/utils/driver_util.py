@@ -2,9 +2,11 @@ import os
 from abc import ABC, abstractmethod
 
 from selenium import webdriver
+from selenium.webdriver.remote.remote_connection import RemoteConnection
 from webdriver_manager.chrome import ChromeDriverManager
 
 from utils.logger import Logger, LogLevel
+from utils.yaml_reader import YamlReader
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
@@ -14,8 +16,15 @@ class Driver(ABC):
     def create_driver(self):
         pass
 
+    @abstractmethod
+    def get_desired_caps(self, browser):
+        pass
+
 
 class LocalDriver(Driver):
+    def get_desired_caps(self, browser):
+        pass
+
     def create_driver(self):
         try:
             driver = webdriver.Chrome(
@@ -32,19 +41,25 @@ class LocalDriver(Driver):
         return driver
 
 
-class ChromeDriver(Driver):
-
+class ChromeRemoteDriver(Driver):
     def create_driver(self):
-        pass
+        caps = self.get_desired_caps()
+        driver = webdriver.Remote(
+            command_executor=RemoteConnection("your remote URL"),
+            desired_capabilities={"LT:Options": caps})
+        driver.maximize_window()
+        log.info(f'Local Chrome driver created with session: {driver}')
+        return driver
 
-
-class RemoteDriver(Driver):
-
-    def create_driver(self):
-        pass
+    def get_desired_caps(self, browser="chrome"):
+        caps = YamlReader.read_caps(browser)
+        return caps
 
 
 class FirefoxDriver(Driver):
+    def get_desired_caps(self, browser):
+        pass
+
     def create_driver(self):
         pass
 
@@ -70,12 +85,11 @@ class WebDriverFactory:
     @staticmethod
     def create_driver(driver_type="chrome"):
         if driver_type.lower() == "chrome":
-            return ChromeDriver().create_driver()
+            return ChromeRemoteDriver().create_driver()
         elif driver_type.lower() == "firefox":
             return FirefoxDriver().create_driver()
-        elif driver_type.lower() == "remote":
-            return RemoteDriver().create_driver()
         elif driver_type.lower() == "local":
             return LocalDriver().create_driver()
         else:
             raise ValueError(f"Unsupported driver type: {driver_type}")
+

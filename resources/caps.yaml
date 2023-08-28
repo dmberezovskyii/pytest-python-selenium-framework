@@ -1,3 +1,6 @@
  chrome:
-   browser: ""
-
+    "build": "1.0"
+    "name": "LambdaTest Chrome"
+    "platform": "Windows 10"
+    "browserName": "Chrome"
+    "version": "latest"
