@@ -2,7 +2,7 @@
 
 This is a simple UI automation framework built with Python, pytest, and Selenium.
 <br>
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/your-username/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/dmytro-berezovskyi/)
 
 
 
