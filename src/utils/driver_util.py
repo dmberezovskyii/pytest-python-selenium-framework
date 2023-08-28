@@ -23,7 +23,7 @@ class LocalDriver(Driver):
                 options=init_driver_options(),
             )
         except Exception as e:
-            log.error(f"Failed to install ChromeDriver: {e}")
+            log.error(f"Run local driver: {e}")
             driver = webdriver.Chrome(
                 executable_path=get_driver_path(), options=init_driver_options()
             )
