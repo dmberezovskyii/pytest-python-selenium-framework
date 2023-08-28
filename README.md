@@ -4,7 +4,7 @@
 
 | Item                                          | Status                                                   |
 |-----------------------------------------------|----------------------------------------------------------|
-| 1. drivers factory: local, remote, [chrome, firefox] | ![Status](https://img.shields.io/badge/TODO-yellow)      |
+| 1. drivers factory: local, remote, [chrome, firefox] | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
 | 2. pytest.ini config: addopts, errors, markers | ![Status](https://img.shields.io/badge/PROGRESS-blue)      |
 | 3. environments: dev, stag, prod              | ![Status](https://img.shields.io/badge/TODO-yellow)      |
 | 4. secrets                                    | ![Status](https://img.shields.io/badge/TODO-yellow)      |
