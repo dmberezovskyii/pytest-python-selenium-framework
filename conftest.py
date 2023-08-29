@@ -1,8 +1,8 @@
 import pytest
 from selenium import webdriver
 
-from utils.driver_util import WebDriverFactory
-from utils.logger import Logger, LogLevel
+from src.utils.driver_util import WebDriverFactory
+from src.utils.logger import Logger, LogLevel
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 

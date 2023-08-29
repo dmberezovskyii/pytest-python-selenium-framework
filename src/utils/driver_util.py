@@ -5,9 +5,9 @@ from selenium import webdriver
 from selenium.webdriver.remote.remote_connection import RemoteConnection
 from webdriver_manager.chrome import ChromeDriverManager
 
-from utils.logger import Logger, LogLevel
-from utils.properties import Properties
-from utils.yaml_reader import YamlReader
+from src.utils.logger import Logger, LogLevel
+from src.utils.properties import Properties
+from src.utils.yaml_reader import YamlReader
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
@@ -15,7 +15,8 @@ log = Logger(log_lvl=LogLevel.INFO).get_instance()
 def _init_driver_options():
     opts = webdriver.ChromeOptions()
     # ... (options setup)
-    # opts.add_argument("--headless")
+    opts.add_argument("--headless")
+    opts.add_argument("--max-window-size")
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--no-sandbox")
     log.info(f'Driver options {opts.arguments}')
