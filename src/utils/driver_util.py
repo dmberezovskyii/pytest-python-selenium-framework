@@ -6,7 +6,6 @@ from selenium.webdriver.remote.remote_connection import RemoteConnection
 from webdriver_manager.chrome import ChromeDriverManager
 
 from utils.logger import Logger, LogLevel
-from utils.properties import Properties
 from utils.yaml_reader import YamlReader
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
@@ -43,7 +42,7 @@ class LocalDriver(Driver):
     def get_desired_caps(self, browser):
         pass
 
-    def create_driver(self, environment='stage'):
+    def create_driver(self, environment=None):
         try:
             driver = webdriver.Chrome(
                 executable_path=ChromeDriverManager().install(),
@@ -56,13 +55,12 @@ class LocalDriver(Driver):
             )
         driver.maximize_window()
         driver.implicitly_wait(15)
-        driver.get(Properties.get_base_url(environment))
         log.info(f'Local Chrome driver created with session: {driver}')
         return driver
 
 
 class ChromeRemoteDriver(Driver):
-    def create_driver(self):
+    def create_driver(self, environment=None):
         caps = self.get_desired_caps()
         driver = webdriver.Remote(
             command_executor=RemoteConnection("your remote URL"),
@@ -80,18 +78,18 @@ class FirefoxDriver(Driver):
     def get_desired_caps(self, browser):
         pass
 
-    def create_driver(self):
+    def create_driver(self, environment=None):
         pass
 
 
 class WebDriverFactory:
     @staticmethod
-    def create_driver(driver_type="chrome"):
+    def create_driver(driver_type="local", environment=None):
         if driver_type.lower() == "chrome":
-            return ChromeRemoteDriver().create_driver()
+            return ChromeRemoteDriver().create_driver(environment)
         elif driver_type.lower() == "firefox":
-            return FirefoxDriver().create_driver()
+            return FirefoxDriver().create_driver(environment)
         elif driver_type.lower() == "local":
-            return LocalDriver().create_driver()
+            return LocalDriver().create_driver(environment)
         else:
-            raise ValueError(f"Unsupported driver type: {driver_type}")
+            raise ValueError(f"Unsupported driver type: {driver_type} or {environment}")

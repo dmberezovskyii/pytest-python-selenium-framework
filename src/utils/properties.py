@@ -3,7 +3,7 @@ import os
 
 class Environment:
     BASE_URL = 'env.dev'
-    BASE_STAGE_URL = 'env.stage'
+    BASE_STAGE_URL = 'env.stag'
 
     def __init__(self, value):
         self.value = value
@@ -22,7 +22,7 @@ class Properties:
 
     @staticmethod
     def _get_base_stage_url():
-        return os.environ.get('env.stage', Properties._BASE_STAGE_URL)
+        return os.environ.get('env.stag', Properties._BASE_STAGE_URL)
 
     @staticmethod
     def get_base_url(environment):

@@ -7,24 +7,26 @@ from utils.logger import Logger, LogLevel
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 
-def quit_driver(driver):
+@pytest.fixture(scope="function")
+def quit_driver(request, driver):
+    yield
     if driver is not None:
         driver.quit()
 
 
 # Change scope to "function" to ensure separate drivers create for each test function to avoin issues
 # in multithread, but this increases time execution and memory usage
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 def make_driver(request) -> webdriver.Remote:
+    env = request.config.getoption('--env')
     driver = None
 
     def _make_driver() -> webdriver.Remote:
         nonlocal driver
-        driver = WebDriverFactory().create_driver('local')
+        driver = WebDriverFactory().create_driver(environment=env)
         return driver
 
     yield _make_driver()
-    quit_driver(driver)
 
 
 # Command line options to specify the browser version
