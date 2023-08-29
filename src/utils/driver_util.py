@@ -6,6 +6,7 @@ from selenium.webdriver.remote.remote_connection import RemoteConnection
 from webdriver_manager.chrome import ChromeDriverManager
 
 from utils.logger import Logger, LogLevel
+from utils.properties import Properties
 from utils.yaml_reader import YamlReader
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
@@ -42,7 +43,7 @@ class LocalDriver(Driver):
     def get_desired_caps(self, browser):
         pass
 
-    def create_driver(self):
+    def create_driver(self, environment='stage'):
         try:
             driver = webdriver.Chrome(
                 executable_path=ChromeDriverManager().install(),
@@ -54,6 +55,8 @@ class LocalDriver(Driver):
                 executable_path=_get_driver_path(), options=_init_driver_options()
             )
         driver.maximize_window()
+        driver.implicitly_wait(15)
+        driver.get(Properties.get_base_url(environment))
         log.info(f'Local Chrome driver created with session: {driver}')
         return driver
 
