@@ -6,6 +6,7 @@ from selenium.webdriver.remote.remote_connection import RemoteConnection
 from webdriver_manager.chrome import ChromeDriverManager
 
 from utils.logger import Logger, LogLevel
+from utils.properties import Properties
 from utils.yaml_reader import YamlReader
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
@@ -55,6 +56,7 @@ class LocalDriver(Driver):
             )
         driver.maximize_window()
         driver.implicitly_wait(15)
+        driver.get(Properties.get_base_url(environment))
         log.info(f'Local Chrome driver created with session: {driver}')
         return driver
 
