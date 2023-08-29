@@ -4,7 +4,7 @@ on: push
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
@@ -15,7 +15,7 @@ jobs:
         python-version: "3.10"
 
     - name: Install Chrome
-      run: brew install --cask google-chrome
+      run: sudo apt-get install google-chrome-stable
 
     - name: Install dependencies
       run: |
