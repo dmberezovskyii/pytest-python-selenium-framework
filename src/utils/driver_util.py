@@ -15,6 +15,7 @@ def _init_driver_options():
     opts = webdriver.ChromeOptions()
     # ... (options setup)
     # opts.add_argument("--headless")
+    opts.add_argument("--start-maximized")
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--no-sandbox")
     log.info(f'Driver options {opts.arguments}')
