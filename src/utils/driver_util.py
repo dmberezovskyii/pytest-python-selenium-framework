@@ -23,7 +23,7 @@ def _init_driver_options():
     return opts
 
 
-def _get_driver_path(driver_name="chromedriver"):
+def _get_driver_path(driver_name="chromedriver2"):
     # Adjust the path as needed
     project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     driver_path = os.path.join(project_dir, "resources", driver_name)
@@ -47,7 +47,6 @@ class LocalDriver(Driver):
     def create_driver(self, environment=None):
         try:
             driver = webdriver.Chrome(
-                executable_path=ChromeDriverManager().install(),
                 options=_init_driver_options(),
             )
         except Exception as e:
