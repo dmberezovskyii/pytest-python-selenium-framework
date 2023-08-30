@@ -25,11 +25,6 @@ jobs:
         pip install -r requirements.txt
         pip install --upgrade pytest pytest-html
 
-    - name: Set execute permissions for arm64
-      run: |
-        if [[ $(uname -m) == "x86_64" ]]; then
-          chmod +x resources/x86_64
-        fi
 
     - name: Run tests
       run: |
