@@ -2,9 +2,8 @@ import os
 from abc import ABC, abstractmethod
 
 from selenium import webdriver
-from selenium.webdriver.remote.remote_connection import RemoteConnection
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.remote.remote_connection import RemoteConnection
 
 from src.utils.logger import Logger, LogLevel
 from src.utils.properties import Properties
@@ -13,27 +12,27 @@ from src.utils.yaml_reader import YamlReader
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 
+def _get_driver_path(driver_type=None):
+    # Adjust the path as needed
+    project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    driver_path = os.path.join(project_dir, "resources", driver_type)
+    return driver_path
+
+
 def _init_driver_options():
     opts = webdriver.ChromeOptions()
     # ... (options setup)
-    opts.add_argument("--headless")
-    opts.add_argument("--max-window-size")
+    # opts.add_argument("--headless") # use headless with --no-sandbox
+    # opts.add_argument("--no-sandbox")
+    opts.add_argument("--start-maximized")
     opts.add_argument("--disable-dev-shm-usage")
-    opts.add_argument("--no-sandbox")
     log.info(f'Driver options {opts.arguments}')
     return opts
 
 
-def _get_driver_path(driver_os="chromedriver"):
-    # Adjust the path as needed
-    project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    driver_path = os.path.join(project_dir, "resources", driver_os)
-    return driver_path
-
-
 class Driver(ABC):
     @abstractmethod
-    def create_driver(self):
+    def create_driver(self, environment, dr_type):
         pass
 
     @abstractmethod
@@ -45,20 +44,17 @@ class LocalDriver(Driver):
     def get_desired_caps(self, browser):
         pass
 
-    def create_driver(self, environment=None):
+    def create_driver(self, environment=None, dr_type=None):
         # ChromeDriverManager doesn't include latest versions of ChromeDriver, so we need to manually
         # upload chrome driver from https://googlechromelabs.github.io/chrome-for-testing/#stable to use with Latest
         # version of Chrome, so at first we try to use ChromeDriverManager to upload latest driver
         # and if it fails, we try to use local driver stored in resources
         try:
-            driver = webdriver.Chrome(
-                service=ChromeService(ChromeDriverManager().install()),
-                options=_init_driver_options(),
-            )
+            driver = webdriver.Chrome(options=_init_driver_options())
         except Exception as e:
             log.error(f"Run local driver: {e}")
             driver = webdriver.Chrome(
-                executable_path=_get_driver_path(), options=_init_driver_options()
+                service=ChromeService(_get_driver_path(dr_type)), options=_init_driver_options()
             )
         driver.maximize_window()
         driver.implicitly_wait(15)
@@ -68,7 +64,7 @@ class LocalDriver(Driver):
 
 
 class ChromeRemoteDriver(Driver):
-    def create_driver(self, environment=None):
+    def create_driver(self, environment=None, dr_type=None):
         caps = self.get_desired_caps()
         driver = webdriver.Remote(
             command_executor=RemoteConnection("your remote URL"),
@@ -86,18 +82,22 @@ class FirefoxDriver(Driver):
     def get_desired_caps(self, browser):
         pass
 
-    def create_driver(self, environment=None):
+    def create_driver(self, environment=None, dr_type=None):
         pass
 
 
 class WebDriverFactory:
+    DRIVER_MAPPING = {
+        "chrome": ChromeRemoteDriver,
+        "firefox": FirefoxDriver,
+        "local": LocalDriver
+    }
+
     @staticmethod
-    def create_driver(driver_type="local", environment=None):
-        if driver_type.lower() == "chrome":
-            return ChromeRemoteDriver().create_driver(environment)
-        elif driver_type.lower() == "firefox":
-            return FirefoxDriver().create_driver(environment)
-        elif driver_type.lower() == "local":
-            return LocalDriver().create_driver(environment)
+    def create_driver(environment=None, driver_type="local"):
+        driver_type = driver_type.lower()
+        if driver_type in WebDriverFactory.DRIVER_MAPPING:
+            driver_class = WebDriverFactory.DRIVER_MAPPING[driver_type]
+            return driver_class().create_driver(environment, driver_type)
         else:
             raise ValueError(f"Unsupported driver type: {driver_type} or {environment}")
