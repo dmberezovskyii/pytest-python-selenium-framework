@@ -1,21 +1,21 @@
-name: Running tests
+name: Selenium Tests on macOS x86_64
 
-on: commit
+on: push
 
 jobs:
   test:
-    runs-on: macos-10.15
+    runs-on: macos-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: setup Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v3
       with:
         python-version: "3.10"
 
-    - name: Install Chrome
+    - name: Install Chrome and WebDriver
       run: |
         brew install --cask google-chrome
 
@@ -25,11 +25,6 @@ jobs:
         pip install -r requirements.txt
         pip install --upgrade pytest pytest-html
 
-    - name: Set execute permissions for arm-64
-      run: |
-        if [[ $(uname -m) == "arm64" ]]; then
-          chmod +x resources/arm64
-        fi
 
     - name: Run tests
       run: |
