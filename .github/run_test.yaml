@@ -31,6 +31,7 @@ jobs:
 
     - name: Run tests
       run: |
+
         python -m pytest --verbose --junit-xml=test-results.xml
         
     - name: Publish Test Report
