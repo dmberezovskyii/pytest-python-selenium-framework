@@ -24,7 +24,7 @@ def _init_driver_options():
     return opts
 
 
-def _get_driver_path(driver_os="macchrome"):
+def _get_driver_path(driver_os="mac-64"):
     # Adjust the path as needed
     project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     driver_path = os.path.join(project_dir, "resources", driver_os)

@@ -4,7 +4,11 @@ on: push
 
 jobs:
   test:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        architecture: [intel, arm]
+
+    runs-on: ${{ matrix.architecture }}-latest
 
     steps:
     - name: Checkout repository
@@ -27,7 +31,7 @@ jobs:
 
     - name: Set execute permissions for macchrome
       run: |
-        chmod +x resources/macchrome
+        chmod +x resources/mac-${{ matrix.architecture }}
 
     - name: Run tests
       run: |
