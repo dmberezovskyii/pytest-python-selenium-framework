@@ -4,18 +4,20 @@ on: push
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
+
     - name: setup Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v2
       with:
         python-version: "3.10"
 
     - name: Install Chrome
-      run: sudo apt-get install google-chrome-stable
+      run: |
+        brew install --cask google-chrome
 
     - name: Install dependencies
       run: |
@@ -23,9 +25,10 @@ jobs:
         pip install -r requirements.txt
         pip install --upgrade pytest pytest-html
 
+    - name: Set execute permissions for macchrome
+      run: |
+        chmod +x resources/macchrome
+
     - name: Run tests
-      run:
+      run: |
         python -m pytest
-
-
-
