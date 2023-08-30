@@ -4,9 +4,11 @@ from abc import ABC, abstractmethod
 from selenium import webdriver
 from selenium.webdriver.remote.remote_connection import RemoteConnection
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service as ChromeService
 
-from utils.logger import Logger, LogLevel
-from utils.yaml_reader import YamlReader
+from src.utils.logger import Logger, LogLevel
+from src.utils.properties import Properties
+from src.utils.yaml_reader import YamlReader
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
@@ -14,18 +16,18 @@ log = Logger(log_lvl=LogLevel.INFO).get_instance()
 def _init_driver_options():
     opts = webdriver.ChromeOptions()
     # ... (options setup)
-    # opts.add_argument("--headless")
-    opts.add_argument("--start-maximized")
+    opts.add_argument("--headless")
+    opts.add_argument("--max-window-size")
     opts.add_argument("--disable-dev-shm-usage")
     opts.add_argument("--no-sandbox")
     log.info(f'Driver options {opts.arguments}')
     return opts
 
 
-def _get_driver_path(driver_name="chromedriver"):
+def _get_driver_path(driver_os="chromedriver"):
     # Adjust the path as needed
     project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    driver_path = os.path.join(project_dir, "resources", driver_name)
+    driver_path = os.path.join(project_dir, "resources", driver_os)
     return driver_path
 
 
@@ -44,9 +46,13 @@ class LocalDriver(Driver):
         pass
 
     def create_driver(self, environment=None):
+        # ChromeDriverManager doesn't include latest versions of ChromeDriver, so we need to manually
+        # upload chrome driver from https://googlechromelabs.github.io/chrome-for-testing/#stable to use with Latest
+        # version of Chrome, so at first we try to use ChromeDriverManager to upload latest driver
+        # and if it fails, we try to use local driver stored in resources
         try:
             driver = webdriver.Chrome(
-                executable_path=ChromeDriverManager().install(),
+                service=ChromeService(ChromeDriverManager().install()),
                 options=_init_driver_options(),
             )
         except Exception as e:
@@ -56,6 +62,7 @@ class LocalDriver(Driver):
             )
         driver.maximize_window()
         driver.implicitly_wait(15)
+        driver.get(Properties.get_base_url(environment))
         log.info(f'Local Chrome driver created with session: {driver}')
         return driver
 

@@ -8,3 +8,4 @@ allure-pytest==2.13.2
 
 asyncio~=3.4.3
 aioselenium~=0.0.1
+pytest-xdist
