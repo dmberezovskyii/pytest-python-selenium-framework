@@ -4,13 +4,9 @@ on: push
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: macos-10.15
 
     steps:
-    - name: Use Rosetta 2
-      if: runner.os == 'macOS' && runner.arch == 'arm64'
-      run: arch -x86_64 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
-
     - name: Checkout repository
       uses: actions/checkout@v2
 
@@ -21,7 +17,7 @@ jobs:
 
     - name: Install Chrome
       run: |
-        brew install --cask google-chrome@114.0.5735.90
+        brew install --cask google-chrome
 
     - name: Install dependencies
       run: |
