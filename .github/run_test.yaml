@@ -1,6 +1,6 @@
 name: Running tests
 
-on: push
+on: commit
 
 jobs:
   test:
