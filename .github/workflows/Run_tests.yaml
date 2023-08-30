@@ -21,7 +21,7 @@ jobs:
 
     - name: Install Chrome
       run: |
-        brew install --cask google-chrome
+        brew install --cask google-chrome@114.0.5735.90
 
     - name: Install dependencies
       run: |
