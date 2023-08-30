@@ -38,4 +38,4 @@ This is a simple UI automation framework built with Python, pytest, and Selenium
 | 5. utilities: yaml_reader, logger             | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
 | 6. BasePage: wait strategy, base actions      | ![Status](https://img.shields.io/badge/DONE-brightgreen) |
 | 7. Properties: make properties helper      | ![Status](https://img.shields.io/badge/DONE-brightgreen) |
-| 8. CI: GitHub Actions                                       | ![Status](https://img.shields.io/badge/TODO-yellow)      |
+| 8. CI: GitHub Actions                                       | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
