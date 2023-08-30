@@ -46,6 +46,10 @@ class LocalDriver(Driver):
         pass
 
     def create_driver(self, environment=None):
+        # ChromeDriverManager doesn't include latest versions of ChromeDriver, so we need to manually
+        # upload chrome driver from https://googlechromelabs.github.io/chrome-for-testing/#stable to use with Latest
+        # version of Chrome, so at first we try to use ChromeDriverManager to upload latest driver
+        # and if it fails, we try to use local driver stored in resources
         try:
             driver = webdriver.Chrome(
                 service=ChromeService(ChromeDriverManager().install()),
