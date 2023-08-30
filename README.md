@@ -25,17 +25,23 @@ This is a simple UI automation framework built with Python, pytest, and Selenium
 2. Install required dependencies with
 ```pip install -r requirements.txt```
 
+### Latest chrome drivers
+- #### [Drivers](https://googlechromelabs.github.io/chrome-for-testing/#stable)
 
 
-## TODO
+### TODO
 
-| Item                                          | Status                                                   |
-|-----------------------------------------------|----------------------------------------------------------|
+| Item                                                 | Status                                                   |
+|------------------------------------------------------|----------------------------------------------------------|
 | 1. drivers factory: local, remote, [chrome, firefox] | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
-| 2. pytest.ini config: addopts, errors, markers | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
-| 3. environments: dev, stag, prod              | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
-| 4. secrets                                    | ![Status](https://img.shields.io/badge/TODO-yellow)      |
-| 5. utilities: yaml_reader, logger             | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
-| 6. BasePage: wait strategy, base actions      | ![Status](https://img.shields.io/badge/DONE-brightgreen) |
-| 7. Properties: make properties helper      | ![Status](https://img.shields.io/badge/DONE-brightgreen) |
-| 8. CI: GitHub Actions                                       | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 2. pytest.ini config: addopts, errors, markers       | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 3. environments: dev, stag, prod                     | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 4. secrets                                           | ![Status](https://img.shields.io/badge/TODO-yellow)      |
+| 5. utilities: yaml_reader, logger                    | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 6. BasePage: wait strategy, base actions             | ![Status](https://img.shields.io/badge/DONE-brightgreen) |
+| 7. Properties: make properties helper                | ![Status](https://img.shields.io/badge/DONE-brightgreen) |
+| 8. CI: GitHub Actions: runs tests, publish reports   | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+
+### CI: GitHub Actions
+ - Pay attention while running CI on your local git resources must contain proper chrome driver with x86_64 architecture
+ - Added CI configuration to run tests for ubuntu *run_test_ubuntu.yaml*
