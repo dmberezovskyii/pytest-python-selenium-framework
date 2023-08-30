@@ -7,10 +7,6 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Use Rosetta 2
-      if: runner.os == 'macOS' && runner.arch == 'x64'
-      run: sudo softwareupdate --install-rosetta --agree-to-license
-
     - name: Checkout repository
       uses: actions/checkout@v2
 
@@ -31,8 +27,8 @@ jobs:
 
     - name: Set execute permissions for arm64
       run: |
-        if [[ $(uname -m) == "arm64" ]]; then
-          chmod +x resources/arm64
+        if [[ $(uname -m) == "x86_64" ]]; then
+          chmod +x resources/x86_64
         fi
 
     - name: Run tests
