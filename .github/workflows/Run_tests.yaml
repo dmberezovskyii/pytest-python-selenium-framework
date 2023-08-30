@@ -4,11 +4,7 @@ on: push
 
 jobs:
   test:
-    strategy:
-      matrix:
-        architecture: arm
-
-    runs-on: ${{ matrix.architecture }}-latest
+    runs-on: macos-latest
 
     steps:
     - name: Checkout repository
@@ -29,9 +25,9 @@ jobs:
         pip install -r requirements.txt
         pip install --upgrade pytest pytest-html
 
-    - name: Set execute permissions for macchrome
+    - name: Set execute permissions for arm-64
       run: |
-        chmod +x resources/mac-${{ matrix.architecture }}
+        chmod +x resources/arm64
 
     - name: Run tests
       run: |
