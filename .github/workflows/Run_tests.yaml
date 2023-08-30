@@ -1,4 +1,4 @@
-name: Selenium Tests on macOS M1
+name: Selenium Tests on macOS x86_64 (Rosetta 2)
 
 on: push
 
@@ -7,13 +7,17 @@ jobs:
     runs-on: macos-latest
 
     steps:
+    - name: Use Rosetta 2
+      if: runner.os == 'macOS' && runner.arch == 'x64'
+      run: sudo softwareupdate --install-rosetta --agree-to-license
+
     - name: Checkout repository
       uses: actions/checkout@v2
 
     - name: setup Python
       uses: actions/setup-python@v2
       with:
-        python-version: "3.9"
+        python-version: "3.10"
 
     - name: Install Chrome and WebDriver
       run: |
@@ -24,6 +28,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install --upgrade pytest pytest-html
+
+    - name: Set execute permissions for arm64
+      run: |
+        if [[ $(uname -m) == "arm64" ]]; then
+          chmod +x resources/arm64
+        fi
 
     - name: Run tests
       run: |
