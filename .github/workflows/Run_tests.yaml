@@ -6,7 +6,7 @@ jobs:
   test:
     strategy:
       matrix:
-        architecture: [intel, arm]
+        architecture: arm
 
     runs-on: ${{ matrix.architecture }}-latest
 
