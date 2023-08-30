@@ -7,6 +7,10 @@ jobs:
     runs-on: macos-latest
 
     steps:
+    - name: Use Rosetta 2
+      if: runner.os == 'macOS' && runner.arch == 'arm64'
+      run: arch -x86_64 /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+
     - name: Checkout repository
       uses: actions/checkout@v2
 
