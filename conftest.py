@@ -34,3 +34,4 @@ def pytest_addoption(parser):
     parser.addoption("--browser-version", action="store", default="116", help="Specify the browser version")
     parser.addoption("--browser-type", action="store", default="local", help="Specify the browser type")
     parser.addoption("--env", action="store", default='stage', help="Run browser in headless mode")
+    parser.addoption("--os", action="store", default='macchrome', help="Run browser in os mode")
