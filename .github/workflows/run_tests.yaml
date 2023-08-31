@@ -9,8 +9,11 @@ jobs:
   test:
     runs-on: macos-latest
     env:
-      ENV_DEV: ${{ vars.ENV_DEV }}
-      ENV_STAG: ${{ vars.ENV_STAG }}
+      ENV_DEV: ${{ secrets.ENV_DEV }}
+      ENV_STAG: ${{ secrets.ENV_STAG }}
+      run: |
+        echo "$ENV_DEV"
+        echo "$ENV_STAG"
 
     permissions:
       checks: write
