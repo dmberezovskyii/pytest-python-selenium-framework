@@ -6,6 +6,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      DEV_URL: ${{ vars.DEV_URL }}
+      STAG_URL: ${{ vars.STAG_URL }}
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3

@@ -19,12 +19,16 @@ This is a simple UI automation framework built with Python, pytest, and Selenium
 
 - Python 3.8-3.11
 
-### Usage
+### Usage locally
 
 1. Clone this repository
 2. Install required dependencies with
 ```pip install -r requirements.txt```
-
+3. Create .env file and add 
+```
+DEV_URL = ""
+STAG_URL = ""
+```
 ### Latest chrome drivers
 - #### [Drivers](https://googlechromelabs.github.io/chrome-for-testing/#stable)
 
@@ -44,4 +48,6 @@ This is a simple UI automation framework built with Python, pytest, and Selenium
 
 ### CI: GitHub Actions
  - Pay attention while running CI on your local git resources must contain proper chrome driver with x86_64 architecture
+ - Go to repository settings -> secrets and variables -> actions -> variables and add DEV_URL, STAG_URL
  - Added CI configuration to run tests for ubuntu *run_test_ubuntu.yaml*
+ 
