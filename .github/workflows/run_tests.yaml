@@ -9,8 +9,8 @@ jobs:
   test:
     runs-on: macos-latest
     env:
-      DEV_URL: ${{ vars.ENV_DEV }}
-      STAG_URL: ${{ vars.ENV_STAG }}
+      DEV_URL: ${{ vars.DEV_URL }}
+      STAG_URL: ${{ vars.STAG_URL }}
       run: |
         echo "$ENV_DEV"
         echo "$ENV_STAG"
