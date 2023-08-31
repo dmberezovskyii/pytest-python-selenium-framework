@@ -8,6 +8,9 @@ on:
 jobs:
   test:
     runs-on: macos-latest
+    env:
+      ENV_DEV: ${{ vars.ENV_DEV }}
+      ENV_STAG: ${{ vars.ENV_STAG }}
 
     permissions:
       checks: write
