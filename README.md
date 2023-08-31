@@ -12,6 +12,9 @@ This is a simple UI automation framework built with Python, pytest, Selenium and
 - Based on popular Python libraries: pytest and Selenium.
 - Supports Chrome,Firefox and Remote browsers for UI testing.
 - Provides utilities for setting up and managing WebDriver instances.
+- Supports GitHub Actions CI workflow for Darwin(Mac) and Linux
+- Supports different environments: dev, stage
+- Supports pytest reports and custom logs
 
 ## Getting Started
 
