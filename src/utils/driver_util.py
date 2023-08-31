@@ -12,6 +12,25 @@ from src.utils.yaml_reader import YamlReader
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 
+# def _get_driver_type(dr_type=None):
+#     os_arch_mapping = {
+#         "arm64": "chrome_arm64",
+#         "x86_64": "chrome_x86_64",
+#         "ubuntu": "ubuntu",  # Add additional mappings as needed
+#     }
+#
+#
+#     default_driver_type = dr_type
+#     os_arch = platform.machine()
+#     os_name = platform.system().lower()
+#
+#     driver_type = os_arch_mapping.get(os_arch, default_driver_type)
+#     if os_name in os_arch_mapping:
+#         driver_type = os_arch_mapping[os_name]
+#
+#     return driver_type
+#
+
 def _get_driver_path(driver_type=None):
     # Adjust the path as needed
     project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -19,11 +38,18 @@ def _get_driver_path(driver_type=None):
     return driver_path
 
 
+def _configure_driver(driver, environment):
+    driver.maximize_window()
+    driver.implicitly_wait(15)
+    driver.get(Properties.get_base_url(environment))
+    log.info(f'Local Chrome driver created with session: {driver}')
+
+
 def _init_driver_options():
     opts = webdriver.ChromeOptions()
     # ... (options setup)
-    # opts.add_argument("--headless") # use headless with --no-sandbox
-    # opts.add_argument("--no-sandbox")
+    opts.add_argument("--headless") # use headless with --no-sandbox
+    opts.add_argument("--no-sandbox")
     opts.add_argument("--start-maximized")
     opts.add_argument("--disable-dev-shm-usage")
     log.info(f'Driver options {opts.arguments}')
@@ -56,9 +82,7 @@ class LocalDriver(Driver):
             driver = webdriver.Chrome(
                 service=ChromeService(_get_driver_path(dr_type)), options=_init_driver_options()
             )
-        driver.maximize_window()
-        driver.implicitly_wait(15)
-        driver.get(Properties.get_base_url(environment))
+        _configure_driver(driver, environment)
         log.info(f'Local Chrome driver created with session: {driver}')
         return driver
 
