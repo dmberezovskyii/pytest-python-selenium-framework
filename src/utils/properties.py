@@ -35,6 +35,3 @@ class Properties:
 
 # Load environment variables from .env files
 load_dotenv()
-
-if __name__ == '__main__':
-    print(Properties.get_base_url("dev"))

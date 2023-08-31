@@ -16,8 +16,6 @@ jobs:
       checks: write
 
     steps:
-    - name: environment vars
-      run: echo "${{vars.DEV_URL}}"
     - name: Checkout repository
       uses: actions/checkout@v3
 
