@@ -9,13 +9,15 @@ jobs:
   test:
     runs-on: macos-latest
     env:
-      DEV_URL: ${{ secrets.DEV_URL }}
-      STAG_URL: ${{ secrets.STAG_URL }}
+      DEV_URL: ${{ env.DEV_URL }}
+      STAG_URL: ${{ env.STAG_URL }}
 
     permissions:
       checks: write
 
     steps:
+    - name:
+      run: echo "${{env.DEV_URL}}"
     - name: Checkout repository
       uses: actions/checkout@v3
 
