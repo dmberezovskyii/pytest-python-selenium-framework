@@ -1,6 +1,6 @@
 # Simple Python Selenium UI Automation Framework
 
-This is a simple UI automation framework built with Python, pytest, and Selenium.
+This is a simple UI automation framework built with Python, pytest, Selenium and GitHub Actions CI
 <br>
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/dmytro-berezovskyi/)
 
