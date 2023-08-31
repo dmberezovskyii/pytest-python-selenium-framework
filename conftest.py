@@ -1,4 +1,5 @@
 import pytest
+from dotenv import load_dotenv
 from selenium import webdriver
 
 from src.utils.driver_util import WebDriverFactory
@@ -14,11 +15,9 @@ def quit_driver(request, make_driver):
         make_driver.quit()
 
 
-# Change scope to "function" to ensure separate drivers create for each test function to avoid issues
-# in multithread, but this increases time execution and memory usage
-# @pytest.fixture(params=["chrome", "firefox", "edge"], scope="function")
 @pytest.fixture(scope="function")
 def make_driver(request) -> webdriver.Remote:
+    load_dotenv(dotenv_path=f"{request.config.getoption('--env')}")
     env = request.config.getoption('--env')
     dr_type = request.config.getoption('--type')
     driver = None
@@ -31,7 +30,8 @@ def make_driver(request) -> webdriver.Remote:
     yield _make_driver()
 
 
-# Command line options
+# Rest of your code...
+
 def pytest_addoption(parser):
     parser.addoption("--browser-version", action="store", default="116", help="Specify the browser version")
     parser.addoption("--browser-type", action="store", default="local", help="Specify the browser type")
