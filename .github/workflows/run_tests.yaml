@@ -28,15 +28,19 @@ jobs:
       run: |
         brew install --cask google-chrome
 
-    - name: Install dependencies
+    - name: Cache pip dependencies
+      uses: actions/cache@v2
       with:
-        cache: pip
-        cache-dependency-path: '**/requirements.txt'
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements-dev.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements-dev.txt
+        pip install -r requirements.txt
         pip install --upgrade pytest pytest-html
-      working-directory: ${{ github.workspace }}
 
 
     - name: Run tests
