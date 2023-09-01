@@ -75,6 +75,7 @@ class LocalDriver(Driver):
         # upload chrome driver from https://googlechromelabs.github.io/chrome-for-testing/#stable to use with Latest
         # version of Chrome, so at first we try to use ChromeDriverManager to upload latest driver
         # and if it fails, we try to use local driver stored in resources
+        # if you want to use drivermanager, use selenium version 4.11.0 and higher
         try:
             driver = webdriver.Chrome(options=_init_driver_options())
         except Exception as e:

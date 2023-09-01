@@ -9,3 +9,4 @@ python-dotenv == 1.0.0
 asyncio~=3.4.3
 aioselenium~=0.0.1
 pytest-xdist
+cryptography 41.0.3
