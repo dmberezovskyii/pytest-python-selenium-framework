@@ -1,4 +1,4 @@
-from utils.driver import ChromeRemoteDriver, FirefoxDriver, LocalDriver
+from src.utils.driver import ChromeRemoteDriver, FirefoxDriver, LocalDriver
 
 
 class WebDriverFactory:
