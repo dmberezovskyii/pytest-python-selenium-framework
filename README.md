@@ -3,6 +3,7 @@
 This is a simple UI automation framework built with:
 - Python: 3.10, pytest 7.2.0, Selenium: 4.11.2 and GitHub Actions CI
 <br>
+
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/dmytro-berezovskyi/)
 
 
