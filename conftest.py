@@ -9,7 +9,7 @@ log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 
 @pytest.fixture(params=["local", "firefox"])
-def xd(request):
+def driver_types(request):
     # To run tests on several browsers, we can pass the driver_types fixture as a parameter to the fixture make_drive
     return request.param
 
