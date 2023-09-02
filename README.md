@@ -35,6 +35,13 @@ This is a simple UI automation framework built with:
 DEV_URL = "your-dev-project-url"
 STAG_URL = "your-staging-project-url"
 ```
+4. If you don't want to use environment variables, add your references to the properties file
+```
+class Properties:
+    _BASE_DEV_URL = "" 
+    _BASE_STAGE_URL = ""
+```
+
 ### Latest drivers
 - #### [Chrome Drivers](https://googlechromelabs.github.io/chrome-for-testing/#stable)
 - #### [Firefox Drivers](https://github.com/mozilla/geckodriver)
