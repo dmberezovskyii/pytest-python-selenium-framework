@@ -35,8 +35,9 @@ This is a simple UI automation framework built with:
 DEV_URL = "your-dev-project-url"
 STAG_URL = "your-staging-project-url"
 ```
-### Latest chrome drivers
-- #### [Drivers](https://googlechromelabs.github.io/chrome-for-testing/#stable)
+### Latest drivers
+- #### [Chrome Drivers](https://googlechromelabs.github.io/chrome-for-testing/#stable)
+- #### [Firefox Drivers](https://github.com/mozilla/geckodriver)
 
 
 ### TODO
