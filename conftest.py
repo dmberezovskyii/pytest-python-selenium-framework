@@ -2,10 +2,16 @@ import pytest
 from dotenv import load_dotenv
 from selenium import webdriver
 
-from src.utils.driver_util import WebDriverFactory
+from src.utils.driver_factory import WebDriverFactory
 from src.utils.logger import Logger, LogLevel
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
+
+
+@pytest.fixture(params=["local", "firefox"])
+def xd(request):
+    # To run tests on several browsers, we can pass the driver_types fixture as a parameter to the fixture make_drive
+    return request.param
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -29,8 +35,6 @@ def make_driver(request) -> webdriver.Remote:
 
     yield _make_driver()
 
-
-# Rest of your code...
 
 def pytest_addoption(parser):
     parser.addoption("--browser-version", action="store", default="116", help="Specify the browser version")
