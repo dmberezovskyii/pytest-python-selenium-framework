@@ -3,13 +3,23 @@ import os
 from dotenv import load_dotenv
 
 
+class EmptyURLError(Exception):
+    def __init__(self, env_var):
+        self.env_var = env_var
+        super().__init__(f"Environment variable '{env_var}' is empty or not found.")
+
+
 class Properties:
     _BASE_DEV_URL = ""  # set dev url if you don't want to use .env file
     _BASE_STAGE_URL = ""  # set staging url if you don't want to use .env file
 
     @classmethod
     def _get_base_url(cls, env_var, default_url=None):
-        return os.environ.get(env_var, default_url)
+        url = os.environ.get(env_var)
+        if url is not None and url.strip():  # Check if URL is not empty or whitespace
+            return url
+        else:
+            raise EmptyURLError(env_var)
 
     @classmethod
     def get_base_dev_url(cls):
