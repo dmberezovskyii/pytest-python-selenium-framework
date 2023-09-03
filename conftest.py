@@ -14,13 +14,6 @@ def driver_types(request):
     return request.param
 
 
-@pytest.fixture(scope="function", autouse=True)
-def quit_driver(request, make_driver):
-    yield
-    if make_driver is not None:
-        make_driver.quit()
-
-
 @pytest.fixture(scope="function")
 def make_driver(request) -> webdriver.Remote:
     load_dotenv(dotenv_path=f"{request.config.getoption('--env')}")
@@ -34,6 +27,12 @@ def make_driver(request) -> webdriver.Remote:
         return driver
 
     yield _make_driver()
+
+    def finalizer():
+        if driver is not None:
+            driver.quit()
+
+    request.addfinalizer(finalizer)
 
 
 def pytest_addoption(parser):

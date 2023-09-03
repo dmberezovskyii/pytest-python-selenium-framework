@@ -1,4 +1,5 @@
 from src.utils.driver import ChromeRemoteDriver, FirefoxDriver, LocalDriver
+from utils.error_handler import ErrorHandler, ErrorType
 
 
 class WebDriverFactory:
@@ -15,4 +16,4 @@ class WebDriverFactory:
             driver_class = WebDriverFactory.DRIVER_MAPPING[driver_type]
             return driver_class().create_driver(environment, driver_type)
         else:
-            raise ValueError(f"Unsupported driver type: {driver_type} or {environment}")
+            raise ErrorHandler.raise_error(ErrorType.ENV_ERROR, environment, driver_type)

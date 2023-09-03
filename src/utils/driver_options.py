@@ -3,6 +3,7 @@ import platform
 from selenium import webdriver
 
 from src.utils.logger import Logger, LogLevel
+from utils.error_handler import ErrorHandler, ErrorType
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
@@ -27,7 +28,7 @@ def _init_driver_options(dr_type=None):
     options = driver_option_mapping.get(dr_type)
 
     if options is None:
-        raise ValueError(f'Unknown driver type {dr_type}')
+        raise ErrorHandler.raise_error(ErrorType.UNSUPPORTED_DRIVER_TYPE, dr_type)
 
     _shared_driver_options(options)
     return options

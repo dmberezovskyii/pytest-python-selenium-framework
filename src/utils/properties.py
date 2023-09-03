@@ -1,11 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-
-class EmptyURLError(Exception):
-    def __init__(self, env_var):
-        self.env_var = env_var
-        super().__init__(f"Environment variable '{env_var}' is empty or not found.")
+from src.utils.error_handler import ErrorHandler, ErrorType
 
 
 class Properties:
@@ -21,7 +17,7 @@ class Properties:
         if url is not None and url.strip():  # Check if URL is not empty or whitespace
             return url
         else:
-            raise EmptyURLError(env_var)
+            raise ErrorHandler.raise_error(ErrorType.EMPTY_URL_ERROR, env_var)
 
     @classmethod
     def get_base_url(cls, environment):
@@ -29,7 +25,7 @@ class Properties:
         if env_var:
             return cls._get_base_url(env_var, default_url)
         else:
-            raise ValueError(f"Unsupported environment: {environment}")
+            raise ErrorHandler.raise_error(ErrorType.ENV_ERROR, environment)
 
 
 # Load environment variables from .env files
