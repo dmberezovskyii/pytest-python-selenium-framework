@@ -1,5 +1,5 @@
 from src.utils.driver import ChromeRemoteDriver, FirefoxDriver, LocalDriver
-from utils.error_handler import ErrorHandler, ErrorType
+from src.utils.error_handler import ErrorHandler, ErrorType
 
 
 class WebDriverFactory:
