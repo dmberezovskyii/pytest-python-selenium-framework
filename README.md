@@ -39,8 +39,11 @@ STAG_URL = "your-staging-project-url"
 4. If you don't want to use environment variables, add your references to the properties file
 ```
 class Properties:
-    _BASE_DEV_URL = "" 
-    _BASE_STAGE_URL = ""
+     _ENV_VARIABLES = {
+        "dev": ("DEV_URL", ""),
+        "stag": ("STAG_URL", ""),
+        # Add more environments and their default URLs as needed
+    }
 ```
 
 ### Latest drivers

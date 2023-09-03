@@ -9,7 +9,7 @@ log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 def _shared_driver_options(options):
     # ... (options setup)
-    options.add_argument("--headless")  # use headless with --no-sandbox
+    # options.add_argument("--headless")  # use headless with --no-sandbox
     options.add_argument("--start-maximized")
     options.add_argument("--disable-dev-shm-usage")
     if platform.system() == "Linux":

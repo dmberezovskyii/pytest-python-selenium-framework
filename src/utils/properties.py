@@ -1,5 +1,4 @@
 import os
-
 from dotenv import load_dotenv
 
 
@@ -10,8 +9,11 @@ class EmptyURLError(Exception):
 
 
 class Properties:
-    _BASE_DEV_URL = ""  # set dev url if you don't want to use .env file
-    _BASE_STAGE_URL = ""  # set staging url if you don't want to use .env file
+    _ENV_VARIABLES = {
+        "dev": ("DEV_URL", ""),
+        "stag": ("STAG_URL", ""),
+        # Add more environments and their default URLs as needed
+    }
 
     @classmethod
     def _get_base_url(cls, env_var, default_url=None):
@@ -22,23 +24,10 @@ class Properties:
             raise EmptyURLError(env_var)
 
     @classmethod
-    def get_base_dev_url(cls):
-        return cls._get_base_url('DEV_URL', Properties._BASE_DEV_URL)
-
-    @classmethod
-    def get_base_stage_url(cls):
-        return cls._get_base_url('STAG_URL', Properties._BASE_STAGE_URL)
-
-    @classmethod
     def get_base_url(cls, environment):
-        url_mapping = {
-            "dev": cls.get_base_dev_url(),
-            "stag": cls.get_base_stage_url(),
-            # Add more environment mappings as needed
-        }
-
-        if environment in url_mapping:
-            return url_mapping[environment]
+        env_var, default_url = cls._ENV_VARIABLES.get(environment, (None, None))
+        if env_var:
+            return cls._get_base_url(env_var, default_url)
         else:
             raise ValueError(f"Unsupported environment: {environment}")
 
