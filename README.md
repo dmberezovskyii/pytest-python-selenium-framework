@@ -49,6 +49,7 @@ class Properties:
 ### Latest drivers
 - #### [Chrome Drivers](https://googlechromelabs.github.io/chrome-for-testing/#stable)
 - #### [Firefox Drivers](https://github.com/mozilla/geckodriver)
+- #### It is possible to download the latest version of the driver for MacOS arch64 using chromedriver.sh located in the resources folder
 
 
 ### TODO
