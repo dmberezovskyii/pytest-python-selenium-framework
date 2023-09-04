@@ -2,13 +2,16 @@ import os
 from abc import ABC, abstractmethod
 
 from selenium import webdriver
+from selenium.common import WebDriverException
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.remote.remote_connection import RemoteConnection
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.utils import ChromeType
 
+from src.utils.driver_options import _init_driver_options
 from src.utils.logger import Logger, LogLevel
 from src.utils.properties import Properties
 from src.utils.yaml_reader import YamlReader
-from src.utils.driver_options import _init_driver_options
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
@@ -17,6 +20,8 @@ def _get_driver_path(driver_type=None):
     # Adjust the path as needed
     project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     driver_path = os.path.join(project_dir, "resources", driver_type)
+    if not driver_path:
+        raise WebDriverException(f"Unable to obtain working binary; with payh {driver_path}")
     return driver_path
 
 
@@ -46,7 +51,8 @@ class LocalDriver(Driver):
         # and if it fails, we try to use local driver stored in resources
         # if you want to use drivermanager, use selenium version 4.11.0 and higher
         try:
-            driver = webdriver.Chrome(options=_init_driver_options(dr_type=dr_type))
+            driver_path = ChromeDriverManager(chrome_type=ChromeType.GOOGLE).install()
+            driver = webdriver.Chrome(service=ChromeService(executable_path=driver_path))
         except Exception as e:
             log.error(f"Run local driver: {e}")
             driver = webdriver.Chrome(
