@@ -10,3 +10,4 @@ asyncio~=3.4.3
 aioselenium~=0.0.1
 pytest-xdist~=3.3.1
 cryptography~=41.0.3
+beautifulsoup=4.12.2
