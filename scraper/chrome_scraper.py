@@ -55,7 +55,7 @@ class ChromePageScraper:
 
         :param platform: os_name and architecture
         :param version: your chrome browser version
-        :param milestone: first 3 difit of browser version: 116 or 115
+        :param milestone: first 3 digit of browser version: 116 or 115
         :return:
         """
         if version is None and milestone is None:
