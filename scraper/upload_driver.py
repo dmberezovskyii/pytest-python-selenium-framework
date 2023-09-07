@@ -78,7 +78,14 @@ class OSChecker:
     def check_os():
         os_name = os.uname().sysname
         arch = os.uname().machine
-        return os_name, arch
+
+        # Check if os_name is "Darwin" and replace it with "mac"
+        if os_name == "Darwin":
+            os_name = "mac"
+        if os_name == "mac":
+            return '-'.join([os_name, arch])
+        else:
+            return ''.join([os_name, arch])
 
     def print_os_info(self):
         os_name, arch = self.check_os()
@@ -86,19 +93,4 @@ class OSChecker:
 
 
 if __name__ == "__main__":
-
-    download_url = ""
-    # Define the destination folder for the downloaded file
-    project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    driver_path = os.path.join(project_dir, "resources")
-
-    driver_manager = DriverManager(driver_path)
-
-    if driver_manager.os_checker.check_os() == ("Darwin", "arm64"):
-        print("Building for Apple M1")
-        download_url = "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/mac-arm64/chromedriver-mac-arm64.zip"
-    else:
-        print("Building for x86_64")
-        download_url = "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/116.0.5845.96/mac-x64/chromedriver-mac-x64.zip"
-
-    driver_manager.download_and_extract_chromedriver(download_url)
+    print(OSChecker.check_os())
