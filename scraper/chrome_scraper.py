@@ -48,24 +48,30 @@ class ChromePageScraper:
         if os_name in drivers:
             print(drivers[os_name])
 
-    def get_chromedriver(self, milestone, platform, version=None):
+    def get_chromedriver(self, platform, version=None, milestone=None):
+        """
 
+        :param platform: os_name and architecture
+        :param version: your chrome browser version
+        :param milestone: first 3 difit of browser version: 116 or 115
+        :return:
+        """
         # Parse the JSON data
         parsed_data = json.loads(self.fetch(self.URL).text)
         milestones_data = parsed_data["milestones"]
 
-        if milestone in milestones_data:
-            milestone_data = milestones_data[milestone]
-            if "chromedriver" in milestone_data["downloads"]:
-                for chromedriver_info in milestone_data["downloads"]["chromedriver"]:
-                    if (
-                            chromedriver_info["platform"] == platform
-                            and (version is None or milestone_data["version"] == version)
-                    ):
-                        return chromedriver_info
+        for milestone_key, milestone_data in milestones_data.items():
+            if (
+                    (milestone is None or milestone_key == milestone)
+                    and (version is None or milestone_data["version"] == version)
+            ):
+                if "chromedriver" in milestone_data["downloads"]:
+                    for chromedriver_info in milestone_data["downloads"]["chromedriver"]:
+                        if platform is None or chromedriver_info["platform"] == platform:
+                            return chromedriver_info
 
 
 if __name__ == '__main__':
     scraper = ChromePageScraper(ChromePageScraper.URL_ALL)
-    elements = scraper.get_chromedriver("116", "mac-arm64")
+    elements = scraper.get_chromedriver("mac-arm64")
     print(elements)
