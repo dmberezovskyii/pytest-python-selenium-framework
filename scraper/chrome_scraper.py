@@ -19,6 +19,7 @@ class ChromePageScraper:
 
     @staticmethod
     def parse_latest() -> Dict[str, str]:
+        # returns a latest stable chrome driver
         elements_list = []
         drivers = {}
         page = ChromePageScraper.__fetch(ChromePageScraper.URL_LATEST)
