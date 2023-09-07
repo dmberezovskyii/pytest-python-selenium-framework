@@ -4,23 +4,24 @@ from typing import Dict
 import requests
 from bs4 import BeautifulSoup
 
+from scraper.os_checker import OSChecker
+
 
 class ChromePageScraper:
     URL_LATEST = 'https://googlechromelabs.github.io/chrome-for-testing/#stable'
     URL_ALL = "https://googlechromelabs.github.io/chrome-for-testing/latest-versions-per-milestone-with-downloads.json"
 
-    def __init__(self, url: str):
-        self.URL = url
-
-    def fetch(self, url: str) -> requests.Response:
+    @staticmethod
+    def __fetch(url: str) -> requests.Response:
         response = requests.get(url)
         response.raise_for_status()  # Raises an exception if status code is not 200
         return response
 
-    def parse_latest(self) -> Dict[str, str]:
+    @staticmethod
+    def parse_latest() -> Dict[str, str]:
         elements_list = []
         drivers = {}
-        page = self.fetch(self.URL)
+        page = ChromePageScraper.__fetch(ChromePageScraper.URL_LATEST)
 
         soup = BeautifulSoup(page.text, 'html.parser')
         element = soup.select_one('section#stable.status-not-ok div.table-wrapper table tbody tr.status-ok')
@@ -48,7 +49,8 @@ class ChromePageScraper:
         if os_name in drivers:
             print(drivers[os_name])
 
-    def get_chromedriver(self, platform, version=None, milestone=None):
+    @staticmethod
+    def get_chromedriver(platform=None, version=None, milestone=None):
         """
 
         :param platform: os_name and architecture
@@ -56,8 +58,13 @@ class ChromePageScraper:
         :param milestone: first 3 difit of browser version: 116 or 115
         :return:
         """
+        if version is None and milestone is None:
+            raise ValueError(f"You must specify version or milestone: version {version}, milestone {milestone}")
+        if platform is None:
+            platform = OSChecker.check_os()
+
         # Parse the JSON data
-        parsed_data = json.loads(self.fetch(self.URL).text)
+        parsed_data = json.loads(ChromePageScraper.__fetch(ChromePageScraper.URL_ALL).text)
         milestones_data = parsed_data["milestones"]
 
         for milestone_key, milestone_data in milestones_data.items():
@@ -72,6 +79,4 @@ class ChromePageScraper:
 
 
 if __name__ == '__main__':
-    scraper = ChromePageScraper(ChromePageScraper.URL_ALL)
-    elements = scraper.get_chromedriver("mac-arm64")
-    print(elements)
+    print(ChromePageScraper.get_chromedriver(milestone='116'))
