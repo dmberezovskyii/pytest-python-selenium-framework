@@ -32,6 +32,8 @@ This is a simple UI automation framework built with:
 2. Install required dependencies with
 ```pip install -r requirements.txt```
 3. Create .env file and add 
+4. Download driver to resources directory:
+   - rename chromedriver to local if you want to run tests locally
 ```
 DEV_URL = "your-dev-project-url"
 STAG_URL = "your-staging-project-url"
