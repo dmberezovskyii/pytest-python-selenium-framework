@@ -43,14 +43,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          set -e
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install --upgrade pytest pytest-html
           pip install ruff 
-
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
       - name: Run Linting
         run: |
@@ -58,7 +54,7 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m pytest --verbose --maxfail=5 --disable-warnings --junit-xml=test-results.xml
+          python -m pytest --verbose --junit-xml=test-results.xml
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3
