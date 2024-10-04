@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test:
+  selenium-tests:
     runs-on: macos-latest
     env:
       DEV_URL: ${{ vars.DEV_URL }}
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
-          python-version: "3.12"
+          python-version: "3.11"
 
       - name: Install Chrome and WebDriver if not already installed
         run: |
