@@ -12,21 +12,35 @@ from src.utils.driver_options import _init_driver_options
 from src.utils.logger import Logger, LogLevel
 from src.utils.properties import Properties
 from src.utils.yaml_reader import YamlReader
+from utils.error_handler import ErrorHandler, ErrorType
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 
 def _get_driver_path(driver_type=None):
-    # Adjust the path as needed
+    # Check if driver_type is provided
+    if driver_type is None:
+        raise ValueError("Driver type must be specified.")
+
     project_dir = os.path.dirname(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     )
-    driver_path = os.path.join(project_dir, "resources", driver_type)
-    if not driver_path:
-        raise WebDriverException(
-            f"Unable to obtain working binary; with payh {driver_path}"
-        )
-    return driver_path
+    driver_path = os.path.join(project_dir,
+                               "resources")
+
+    # Check if the resources directory exists
+    if not os.path.exists(driver_path):
+        ErrorHandler.raise_error(ErrorType.ENV_ERROR,
+                                 f"Resources directory not found at {driver_path}.",
+                                 custom_message="Please ensure it exists.")
+
+    # Check if any driver binaries exist in the resources directory
+    driver_files = [f for f in os.listdir(driver_path) if
+                    os.path.isfile(os.path.join(driver_path, f))]
+    print(driver_files)
+    if not driver_files:
+        ErrorHandler.raise_error(ErrorType.EMPTY_URL_ERROR,
+                                 "No WebDriver binaries found in the resources directory.")
 
 
 def _configure_driver(driver, environment):
