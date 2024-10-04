@@ -1,8 +1,9 @@
 import pytest
-from core import CustomEventListener
+
 from dotenv import load_dotenv
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 
+from event.event_listener import EventListener
 from src.utils.driver_factory import WebDriverFactory
 from src.utils.logger import Logger, LogLevel
 
@@ -12,7 +13,7 @@ log = Logger(log_lvl=LogLevel.INFO).get_instance()
 def event_listener(driver) -> EventFiringWebDriver:
     """Attach the event listener to the driver."""
     e_driver: EventFiringWebDriver = EventFiringWebDriver(
-        driver, CustomEventListener()
+        driver, EventListener()
     )
     return e_driver
 
