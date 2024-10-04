@@ -1,7 +1,7 @@
 # Simple Python Selenium UI Automation Framework
 
 This is a simple UI automation framework built with:
-- Python: 3.10, pytest 7.2.0, Selenium: 4.11.2 and GitHub Actions CI
+- Python: 3.10, pytest 7.2.0, Selenium: 4.24.0 and GitHub Actions CI
 <br>
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/dmytro-berezovskyi/)
@@ -23,7 +23,7 @@ This is a simple UI automation framework built with:
 ### Prerequisites
 
 - Python 3.8-3.11
-- Note, if you are not using MacOS with arm64 architecture or Selenium version below 4.11.0, 
+- Note, if you are not using MacOS with arm64 architecture or Selenium version below 4.24.0, 
 *upload the appropriate driver corresponding to your OS to the resources directory*
 
 ### Usage locally
