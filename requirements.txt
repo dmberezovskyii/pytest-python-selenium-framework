@@ -11,7 +11,7 @@ aioselenium~=0.0.1
 pytest-xdist~=3.3.1
 cryptography~=43.0.1
 beautifulsoup4==4.12.2
-requests~=2.31.0
+requests~=2.32.0
 setuptools~=70.0.0
 ruff~=0.6.8
 Appium-Python-Client~=2.7.1
