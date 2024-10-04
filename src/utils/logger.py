@@ -1,5 +1,4 @@
 import logging
-import pathlib
 import os
 import time
 from enum import Enum
@@ -17,7 +16,9 @@ class Singleton(type):
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+            cls._instances[cls] = super(Singleton, cls).__call__(
+                *args, **kwargs
+            )
         return cls._instances[cls]
 
 
@@ -34,7 +35,9 @@ class Logger(metaclass=Singleton):
 
     def _create_log_file(self):
         current_time = time.strftime("%Y-%m-%d")
-        log_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "tests", "logs"))
+        log_directory = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), "..", "tests", "logs")
+        )
 
         if not os.path.exists(log_directory):
             os.makedirs(log_directory)

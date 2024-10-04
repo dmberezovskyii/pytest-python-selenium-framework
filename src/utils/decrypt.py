@@ -6,5 +6,5 @@ class Decryption:
         self.fernet = Fernet
 
     def generate(self):
-        key = self.fernet.generate_key().decode('UTF-8').strip()
+        key = self.fernet.generate_key().decode("UTF-8").strip()
         return key

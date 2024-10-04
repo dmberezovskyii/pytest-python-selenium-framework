@@ -12,22 +12,22 @@ class OSChecker:
         if os_name == "Darwin":
             os_name = "mac"
         if os_name == "mac":
-            return '-'.join([os_name, arch])
+            return "-".join([os_name, arch])
         else:
-            return ''.join([os_name, arch])
+            return "".join([os_name, arch])
 
     def print_os_info(self):
         os_name, arch = self.check_os()
         print(f"Operating System: {os_name}, arch={arch}")
 
-    def _get_driver_type(dr_type=None):
+    def _get_driver_type(self=None):
         os_arch_mapping = {
             "arm64": "chrome_arm64",
             "x86_64": "chrome_x86_64",
             "ubuntu": "ubuntu",  # Add additional mappings as needed
         }
 
-        default_driver_type = dr_type
+        default_driver_type = self
         os_arch = platform.machine()
         os_name = platform.system().lower()
 

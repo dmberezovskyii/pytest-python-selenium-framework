@@ -1,0 +1,44 @@
+# Ruff Configuration
+line-length = 88
+indent-width = 4
+output-format = "grouped"
+respect-gitignore = true
+target-version = "py312"
+
+[lint]
+select = [
+    "E",  # Error codes
+    "F",  # Pyflakes
+    "W",  # Warnings
+    "C",  # Complexity
+    "N",  # Naming conventions
+    "I",  # Ignored errors
+    "E501",  # Line too long
+    "N805",  # First argument should be 'self'
+]
+fixable = ["ALL"]  # All fixable errors will be automatically corrected
+
+# Ignored Errors
+ignore = [
+    "E731",  # Do not assign a lambda expression, use a def instead
+    "N801",  # Function name should be lowercase
+    "I001",  # Import convention violation
+    "F631",  # Assert should not be used with a literal
+]
+
+# Regular expression for dummy variables
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Excluded Directories and Files
+exclude = [
+    ".pytest_cache",
+    "poetry.lock",
+    "__pypackages__",
+    ".git",
+    ".env",
+    ".ruff_cache"
+]
+
+[format]
+exclude = ["__init__.py"]  # Exclude __init__.py from formatting
+skip-magic-trailing-comma = true  # Skip the trailing comma for magic trailing commas

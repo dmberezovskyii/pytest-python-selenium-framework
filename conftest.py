@@ -1,7 +1,6 @@
 import pytest
 from core import CustomEventListener
 from dotenv import load_dotenv
-from selenium import webdriver
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 
 from src.utils.driver_factory import WebDriverFactory

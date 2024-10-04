@@ -11,7 +11,7 @@ class ErrorHandler:
     DEFAULT_ERROR_MESSAGES = {
         ErrorType.ENV_ERROR: "Unsupported environment",
         ErrorType.EMPTY_URL_ERROR: "Environment variable is empty or not found",
-        ErrorType.UNSUPPORTED_DRIVER_TYPE: "Unsupported driver type"
+        ErrorType.UNSUPPORTED_DRIVER_TYPE: "Unsupported driver type",
     }
 
     @staticmethod
