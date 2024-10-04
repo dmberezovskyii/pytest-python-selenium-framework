@@ -51,6 +51,9 @@ coverage.xml
 .pytest_cache/
 cover/
 *.env
+resources/local
+resources/firefox
+resources/ubuntuchrome
 
 # Translations
 *.mo
