@@ -3,8 +3,8 @@ import pytest
 from dotenv import load_dotenv
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 
-from event.event_listener import EventListener
-from src.utils.driver_factory import WebDriverFactory
+from utils.event_listener import EventListener
+from driver.driver_factory import WebDriverFactory
 from src.utils.logger import Logger, LogLevel
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
