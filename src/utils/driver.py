@@ -17,15 +17,22 @@ log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 
 def _get_driver_path(driver_type=None):
-    # Adjust the path as needed
+    # Check if driver_type is provided
+    if driver_type is None:
+        raise ValueError("Driver type must be specified.")
+
     project_dir = os.path.dirname(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     )
     driver_path = os.path.join(project_dir, "resources", driver_type)
-    if not driver_path:
+
+    # Check if the driver file exists
+    if not os.path.exists(driver_path):
         raise WebDriverException(
-            f"Unable to obtain working binary; with payh {driver_path}"
+            f"WebDriver binary not found at {driver_path}. "
+            f"Please ensure it exists the driver {driver_type} in directory."
         )
+
     return driver_path
 
 
