@@ -8,9 +8,9 @@ from selenium.webdriver.remote.remote_connection import RemoteConnection
 from webdriver_manager.chrome import ChromeDriverManager
 
 from driver.driver_options import _init_driver_options
-from src.utils.logger import Logger, LogLevel
+from utils.logger import Logger, LogLevel
 from properties import Properties
-from src.utils.yaml_reader import YamlReader
+from utils.yaml_reader import YamlReader
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 

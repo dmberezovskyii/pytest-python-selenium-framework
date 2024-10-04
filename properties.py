@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from src.utils.error_handler import ErrorHandler, ErrorType
+from utils.error_handler import ErrorHandler, ErrorType
 
 
 class Properties:

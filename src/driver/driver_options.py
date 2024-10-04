@@ -2,8 +2,8 @@ import platform
 
 from selenium import webdriver
 
-from src.utils.logger import Logger, LogLevel
-from src.utils.error_handler import ErrorHandler, ErrorType
+from utils.logger import Logger, LogLevel
+from utils.error_handler import ErrorHandler, ErrorType
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 

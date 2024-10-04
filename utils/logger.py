@@ -36,7 +36,7 @@ class Logger(metaclass=Singleton):
     def _create_log_file(self):
         current_time = time.strftime("%Y-%m-%d")
         log_directory = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "..", "tests", "logs")
+            os.path.join(os.path.dirname(__file__), "../src", "tests", "logs")
         )
 
         if not os.path.exists(log_directory):
