@@ -6,7 +6,6 @@ from selenium.common import WebDriverException
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.remote.remote_connection import RemoteConnection
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.utils import ChromeType
 
 from src.utils.driver_options import _init_driver_options
 from src.utils.logger import Logger, LogLevel
@@ -55,21 +54,12 @@ class Driver(ABC):
 
 class LocalDriver(Driver):
     def create_driver(self, environment=None, dr_type=None):
-        """ChromeDriverManager doesn't include latest versions of ChromeDriver,
-        so we need to manually upload chrome driver from
-        https://googlechromelabs.github.io/chrome-for-testing/#stable to use with
-        Latest version of Chrome, so at first we try to use ChromeDriverManager
-        to upload latest driver and if it fails, we try to use local driver stored
-        in resources if you want to use drivermanager,
-        use selenium version 4.11.0 and higher
-        """
+        """Tries to use ChromeDriverManager to install the latest driver,
+        and if it fails, it falls back to a locally stored driver in resources."""
         try:
-            driver_path = ChromeDriverManager(
-                chrome_type=ChromeType.GOOGLE
-            ).install()
+            driver_path = ChromeDriverManager().install()  # No need for ChromeType
             driver = webdriver.Chrome(
-                service=ChromeService(executable_path=driver_path)
-            )
+                service=ChromeService(executable_path=driver_path))
         except Exception as e:
             log.error(f"Run local driver: {e}")
             driver = webdriver.Chrome(
@@ -86,7 +76,7 @@ class ChromeRemoteDriver(Driver):
         caps = self.get_desired_caps()
         driver = webdriver.Remote(
             command_executor=RemoteConnection("your remote URL"),
-            desired_capabilities={"LT:Options": caps}, # noqa
+            desired_capabilities={"LT:Options": caps},  # noqa
         )
         log.info(f"Local Chrome driver created with session: {driver}")
         return driver
