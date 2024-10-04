@@ -1,8 +1,6 @@
 import os
 import time
-from selenium.webdriver.support.abstract_event_listener import (
-    AbstractEventListener,
-)
+from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
 
 
 def take_screenshot_and_log(rp_logger, driver, screenshot_name) -> None:
