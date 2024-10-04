@@ -74,3 +74,20 @@ class Properties:
  - Go to repository settings -> secrets and variables -> actions -> variables and add DEV_URL, STAG_URL
  - Added CI configuration to run tests for ubuntu *run_test_ubuntu.yaml*
  
+### CI: Ruff lint configuration
+Linting Rules: The configuration defines a set of rules that dictate which linting checks are performed. 
+You can customize these rules to suit the project's coding style and requirements.
+ - Create External tools to run linting
+ - Working directory
+```
+$ProjectFileDir$
+```
+ - Program
+```
+path to your ruff installed /bin/ruff 
+```
+ - Arguments 
+```
+$FilePathRelativeToProjectRoot$ --config .ruff.toml
+```
+
