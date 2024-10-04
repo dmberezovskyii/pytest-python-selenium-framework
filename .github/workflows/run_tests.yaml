@@ -48,8 +48,6 @@ jobs:
           pip install -r requirements.txt
           pip install --upgrade pytest pytest-html
           pip install ruff 
-          pip install chromedriver-autoinstaller
-          python -m chromedriver_autoinstaller
 
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
