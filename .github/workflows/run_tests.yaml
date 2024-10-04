@@ -41,8 +41,18 @@ jobs:
             echo "Chrome is already installed"
           fi
 
+      - name: Create virtual environment
+        run: |
+          if [ ! -d "venv" ]; then
+            echo "Creating virtual environment"
+            python -m venv venv
+          else
+            echo "Virtual environment already exists"
+          fi
+
       - name: Install dependencies
         run: |
+          source venv/bin/activate
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install --upgrade pytest pytest-html
@@ -50,10 +60,12 @@ jobs:
 
       - name: Run Linting
         run: |
+          source venv/bin/activate
           ruff check .
 
       - name: Run tests
         run: |
+          source venv/bin/activate
           python -m pytest --verbose --junit-xml=test-results.xml
 
       - name: Publish Test Report
