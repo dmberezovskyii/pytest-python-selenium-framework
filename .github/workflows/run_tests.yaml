@@ -33,15 +33,18 @@ jobs:
             echo "Chrome is already installed"
           fi
 
-      - name: Install dependencies
+      - name: Install Poetry
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install --upgrade pytest pytest-html
+          pip install poetry
+
+      - name: Install dependencies with Poetry
+        run: |
+          poetry install
 
       - name: Run tests
         run: |
-          python -m pytest --verbose --junit-xml=test-results.xml
+          poetry run pytest --verbose --junit-xml=test-results.xml
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3

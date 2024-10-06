@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "simple-framework"
+version = "0.1.3"
+description = "SIMPLE Python selenium framework"
+authors = ["Dmytro Berezovskyi"]
+readme = "README.md"
+packages = [
+    { include = "utils" },
+    { include = "scraper" },
+    { include = "driver" },
+]
+[tool.poetry.dependencies]
+python = "^3.12"
+pytest = "8.3.2"
+PyYAML = "^6.0.1"
+selenium = "4.24.0"
+webdriver-manager = "4.0.2"
+python-dotenv = "1.0.1"
+asyncio = "3.4.3"
+aioselenium = "0.0.1"
+pytest-xdist="3.3.1"
+cryptography="43.0.1"
+beautifulsoup4="4.12.2"
+requests="^2.31.0"
+setuptools="70.0.0"
+ruff="0.6.8"
+
+
+[tool.pytest.ini_options]
+addopts = "-rA -v --env=dev --type=local --capture=no -p no:cacheprovider"
+markers = [
+    { name = "smoke", description = "run smoke tests" },
+    { name = "regression", description = "run regression tests" },
+    { name = "sanity", description = "run sanity tests" }
+]
+testpaths = ["tests"]
+python_files = ["*.py"]
+python_classes = [
+    "Test*",
+    "*Test*",
+    "*Test",
+    "*Tests",
+    "*Suite"
+]
+python_functions = ["test_*"]
+
+junit_family = "legacy"
+junit_suite_name = "Selenium UI suite"
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    "ignore::pytest.PytestUnknownMarkWarning",
+    "ignore::DeprecationWarning",
+    "ignore::ResourceWarning",
+    "ignore::FutureWarning",
+    "ignore::PendingDeprecationWarning"
+]
+
+[tool.pytest.config]
+type = ["local", "firefox", "remote"]  # Define a custom command line option for driver types as a list

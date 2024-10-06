@@ -30,7 +30,12 @@ This is a simple UI automation framework built with:
 
 1. Clone this repository
 2. Install required dependencies with
-```pip install -r requirements.txt```
+ ```shell
+   pip install poetry
+   poetry shell
+   poetry install
+   pip install -r requirements.txt
+   ```
 3. Create .env file and add 
 4. Download driver to resources directory:
    - rename chromedriver to local if you want to run tests locally
