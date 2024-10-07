@@ -31,17 +31,24 @@ class Logger(metaclass=Singleton):
     def _create_log_file(self) -> str:
         current_time = time.strftime("%Y-%m-%d")
         log_directory = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "../tests/logs"))
+            os.path.join(os.path.dirname(__file__), "../tests/logs")
+        )
 
         try:
-            os.makedirs(log_directory, exist_ok=True)  # Create directory if it doesn't exist
+            os.makedirs(
+                log_directory, exist_ok=True
+            )  # Create directory if it doesn't exist
         except Exception as e:
-            raise RuntimeError(f"Failed to create log directory '{log_directory}': {e}")
+            raise RuntimeError(
+                f"Failed to create log directory '{log_directory}': {e}"
+            )
 
         return os.path.join(log_directory, f"log_{current_time}.log")
 
     def _initialize_logging(self, log_lvl: LogLevel) -> None:
-        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        formatter = logging.Formatter(
+            "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        )
         fh = logging.FileHandler(self.log_file, mode="w")
         fh.setFormatter(formatter)
         fh.setLevel(log_lvl.value)
@@ -50,7 +57,9 @@ class Logger(metaclass=Singleton):
     def get_instance(self) -> logging.Logger:
         return self._log
 
-    def annotate(self, message: str, level: Literal["info", "warn", "debug", "error"]) -> None:
+    def annotate(
+        self, message: str, level: Literal["info", "warn", "debug", "error"]
+    ) -> None:
         """Log a message at the specified level."""
         if level == "info":
             self._log.info(message)
@@ -66,7 +75,7 @@ class Logger(metaclass=Singleton):
 
 def log(
     data: Optional[str] = None,
-    level: Literal["info", "warn", "debug", "error"] = "info"
+    level: Literal["info", "warn", "debug", "error"] = "info",
 ) -> Callable:
     """Decorator to log the current method's execution.
 
@@ -83,32 +92,38 @@ def log(
             # Raise an exception if both the docstring and data are None
             if method_docs is None and data is None:
                 raise ValueError(
-                    f"No documentation available for method :: {func.__name__} and no custom log data provided."
+                    f"No documentation available for :: {func.__name__}"
                 )
 
             # Construct the parameter string for logging
-            params_str = ', '.join(repr(arg) for arg in args)
-            kwargs_str = ', '.join(f"{k}={v!r}" for k, v in kwargs.items())
-            all_params_str = ', '.join(filter(None, [params_str, kwargs_str]))
+            params_str = ", ".join(repr(arg) for arg in args)
+            kwargs_str = ", ".join(f"{k}={v!r}" for k, v in kwargs.items())
+            all_params_str = ", ".join(filter(None, [params_str, kwargs_str]))
 
-            # Log message with method documentation or custom data
-            logs = (method_docs + f" Method :: {func.__name__}()" + f" with parameters: {all_params_str}"
-                    if method_docs else
-                    data + f" Method :: {func.__name__}()" + f" with parameters: {all_params_str}")
+            logs = (
+                method_docs
+                + f" Method :: {func.__name__}()"
+                + f" with parameters: {all_params_str}"
+                if method_docs
+                else data
+                + f" Method :: {func.__name__}()"
+                + f" with parameters: {all_params_str}"
+            )
 
             logger_instance.annotate(logs, level)
 
             # Call the original method, passing *args and **kwargs
-            return func(self, *args, **kwargs)  # <--- Fix: properly passing args and kwargs
+            return func(
+                self, *args, **kwargs
+            )
 
         return wrapper
 
     return decorator
 
 
-
 def format_method_doc_str(doc_str: Optional[str]) -> Optional[str]:
     """Add a dot to the docs string if it doesn't exist."""
-    if doc_str and not doc_str.endswith('.'):
+    if doc_str and not doc_str.endswith("."):
         return doc_str + "."
     return doc_str
