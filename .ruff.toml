@@ -1,5 +1,5 @@
 # Ruff Configuration
-line-length = 88
+line-length = 85
 indent-width = 4
 output-format = "grouped"
 respect-gitignore = true
