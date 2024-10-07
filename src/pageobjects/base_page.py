@@ -2,7 +2,7 @@ from enum import Enum
 from typing import Tuple, Optional, Literal
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import (
     TimeoutException, ElementNotVisibleException
@@ -57,10 +57,10 @@ class BasePage:
         waiter = waiter or self._wait
 
         conditions = {
-            "clickable": EC.element_to_be_clickable(locator),
+            "clickable": ec.element_to_be_clickable(locator),
             # Pass the locator tuple as a single argument
-            "visible": EC.visibility_of_element_located(locator),
-            "present": EC.presence_of_element_located(locator),
+            "visible": ec.visibility_of_element_located(locator),
+            "present": ec.presence_of_element_located(locator),
         }
 
         if condition not in conditions:
@@ -89,9 +89,7 @@ class BasePage:
 
     # @log()
     # @timing
-    def set(
-        self, locator: Locator, text: str, wait_type: Optional[WaitType] = None
-    ):
+    def set(self, locator: Locator, text: str, wait_type: Optional[WaitType] = None):
         """
         Set text in an input field.
         """

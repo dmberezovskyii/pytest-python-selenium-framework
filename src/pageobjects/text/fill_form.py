@@ -1,6 +1,6 @@
 from locators.locators import TextFields
 from pageobjects.base_page import BasePage
-from utils.logger import log, Logger
+from utils.logger import log
 
 
 class FillForm(BasePage):
