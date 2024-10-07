@@ -61,3 +61,23 @@ def pytest_addoption(parser):
                      help="Run browser in headless mode")
     parser.addoption("--type", action="store", default='local',
                      help="Run browser in os type")
+
+
+def pytest_runtest_makereport(item, call):
+    """Capture screenshot on test failure."""
+    if call.excinfo is not None:
+        # Make sure the driver is being captured correctly
+        driver = item.funcargs.get('make_driver', None)
+
+        if driver is not None:
+            screenshot_dir = "reports/screenshots"
+            os.makedirs(screenshot_dir, exist_ok=True)  # Create directory if it does not exist
+            screenshot_path = os.path.join(screenshot_dir, f"{item.name}.png")
+
+            try:
+                driver.save_screenshot(screenshot_path)
+                log.info(f"Screenshot saved to: {screenshot_path}")
+            except Exception as e:
+                log.error(f"Failed to save screenshot: {e}")
+        else:
+            log.error("Driver instance is not available for capturing screenshot.")
