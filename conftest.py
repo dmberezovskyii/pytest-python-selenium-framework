@@ -13,9 +13,7 @@ log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 def event_listener(driver) -> EventFiringWebDriver:
     """Attach the event listener to the driver."""
-    e_driver: EventFiringWebDriver = EventFiringWebDriver(
-        driver, EventListener()
-    )
+    e_driver: EventFiringWebDriver = EventFiringWebDriver(driver, EventListener())
     return e_driver
 
 
@@ -29,16 +27,15 @@ def driver_types(request):
 @pytest.fixture
 def make_driver(request) -> EventFiringWebDriver:
     load_dotenv(dotenv_path=f"{request.config.getoption('--env')}")
-    env = request.config.getoption('--env')
-    dr_type = request.config.getoption('--type')
+    env = request.config.getoption("--env")
+    dr_type = request.config.getoption("--type")
     driver = None
 
     def _make_driver() -> EventFiringWebDriver:
         nonlocal driver
         # Create WebDriver instance
         driver = WebDriverFactory().create_driver(
-            environment=env,
-            driver_type=dr_type
+            environment=env, driver_type=dr_type
         )
         # Attach event listener
         driver_with_listener = event_listener(driver)
@@ -54,23 +51,31 @@ def make_driver(request) -> EventFiringWebDriver:
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser-version", action="store", default="129",
-                     help="Specify the browser version")
-    parser.addoption("--env", action="store", default='stage',
-                     help="Run browser in headless mode")
-    parser.addoption("--type", action="store", default='local',
-                     help="Run browser in os type")
+    parser.addoption(
+        "--browser-version",
+        action="store",
+        default="129",
+        help="Specify the browser version",
+    )
+    parser.addoption(
+        "--env", action="store", default="stage", help="Run browser in headless mode"
+    )
+    parser.addoption(
+        "--type", action="store", default="local", help="Run browser in os type"
+    )
 
 
 def pytest_runtest_makereport(item, call):
     """Capture screenshot on test failure."""
     if call.excinfo is not None:
         # Make sure the driver is being captured correctly
-        driver = item.funcargs.get('make_driver', None)
+        driver = item.funcargs.get("make_driver", None)
 
         if driver is not None:
             screenshot_dir = "reports/screenshots"
-            os.makedirs(screenshot_dir, exist_ok=True)  # Create directory if it does not exist
+            os.makedirs(
+                screenshot_dir, exist_ok=True
+            )  # Create directory if it does not exist
             screenshot_path = os.path.join(screenshot_dir, f"{item.name}.png")
 
             try:
