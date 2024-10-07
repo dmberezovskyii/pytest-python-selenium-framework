@@ -10,7 +10,7 @@ from core.driver_options import _init_driver_options
 from utils.error_handler import ErrorHandler, ErrorType
 from utils.logger import Logger, LogLevel
 from properties import Properties
-from utils.yaml_reader import YamlReader
+from utils.yaml_reader import YAMLReader
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
@@ -42,7 +42,8 @@ class Driver(ABC):
         pass
 
     def get_desired_caps(self, browser="chrome"):
-        caps = YamlReader.read_caps(browser)
+        caps = YAMLReader.read_caps(browser)
+        log.info(f"capabilities for driver {caps}")
         return caps
 
 
@@ -51,7 +52,7 @@ class LocalDriver(Driver):
         """Tries to use ChromeDriverManager to install the latest driver,
         and if it fails, it falls back to a locally stored driver in resources."""
         try:
-            log.info(f"Run local chrome driver")
+            log.info(f"Run local chrome driver with {_init_driver_options()}")
             driver_path = ChromeDriverManager().install()
             driver = webdriver.Chrome(
                 service=ChromeService(executable_path=driver_path),

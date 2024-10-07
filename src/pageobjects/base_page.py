@@ -8,6 +8,8 @@ from selenium.common.exceptions import (
     TimeoutException, ElementNotVisibleException
 )
 
+from utils.logger import log
+
 # Type alias for locators
 Locator = Tuple[By, str]
 
@@ -101,6 +103,7 @@ class BasePage:
         waiter = self._get_waiter(wait_type)
         return self.wait_for(locator, condition="present", waiter=waiter).text
 
+    @log()
     def get_title(self) -> str:
         """
         Get the page title.
