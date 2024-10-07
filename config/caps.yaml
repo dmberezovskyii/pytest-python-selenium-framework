@@ -1,0 +1,14 @@
+# config/capabilities.yaml
+chrome:
+  browserName: "chrome"
+  version: "latest"
+  platform: "MAC"
+  enableVNC: true
+  enableVideo: false
+
+firefox:
+  browserName: "firefox"
+  version: "latest"
+  platform: "MAC"
+  enableVNC: true
+  enableVideo: false

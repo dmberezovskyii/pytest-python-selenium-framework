@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [
     { include = "utils" },
     { include = "scraper" },
-    { include = "driver" },
+    { include = "core" }
 ]
 [tool.poetry.dependencies]
 python = "^3.12"

@@ -1,12 +1,11 @@
 import pytest
-import sys
 import os
 
 from dotenv import load_dotenv
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 
-from utils.event_listener import EventListener
-from driver.driver_factory import WebDriverFactory
+from core.event_listener import EventListener
+from core.driver_factory import WebDriverFactory
 from utils.logger import Logger, LogLevel
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()

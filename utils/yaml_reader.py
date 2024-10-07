@@ -8,7 +8,7 @@ class YamlReader:
         try:
             # Get the path to the resources folder from the script's directory
             resources_path = (
-                Path(__file__).resolve().parent.parent.parent / "resources"
+                Path(__file__).resolve().parent.parent.parent / "config"
             )
             abs_path = resources_path / filename
 

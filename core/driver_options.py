@@ -33,4 +33,5 @@ def _init_driver_options(dr_type=None):
         )
 
     _shared_driver_options(options)
+    log.info(f"Driver options {options.arguments}")
     return options

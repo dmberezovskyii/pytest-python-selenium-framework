@@ -1,5 +1,8 @@
-from driver.driver import ChromeRemoteDriver, FirefoxDriver, LocalDriver
+from core.driver import ChromeRemoteDriver, FirefoxDriver, LocalDriver
 from utils.error_handler import ErrorHandler, ErrorType
+from utils.logger import Logger, LogLevel
+
+log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
 
 class WebDriverFactory:
@@ -11,6 +14,7 @@ class WebDriverFactory:
 
     @staticmethod
     def create_driver(environment=None, driver_type="local"):
+        log.info(f"Creating driver {driver_type}")
         driver_type = driver_type.lower()
         if driver_type in WebDriverFactory.DRIVER_MAPPING:
             driver_class = WebDriverFactory.DRIVER_MAPPING[driver_type]
