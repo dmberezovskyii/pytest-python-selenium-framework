@@ -89,7 +89,6 @@ def log(
             # Get the method's docstring
             method_docs = format_method_doc_str(func.__doc__)
 
-            # Raise an exception if both the docstring and data are None
             if method_docs is None and data is None:
                 raise ValueError(
                     f"No documentation available for :: {func.__name__}"
