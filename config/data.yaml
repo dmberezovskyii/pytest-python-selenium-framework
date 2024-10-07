@@ -1,0 +1,12 @@
+users:
+  username1:
+    username: "john_doe@gmail.com"
+    details:
+      first_name: "John"
+      last_name: "Doe"
+      password: ""
+  username2:
+    username: "username"
+names:
+  - name1: "name2"
+  - name2: "name2"

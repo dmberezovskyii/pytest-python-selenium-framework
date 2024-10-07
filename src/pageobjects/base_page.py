@@ -106,3 +106,15 @@ class BasePage:
         Get the page title.
         """
         return self.driver.title
+
+    def navigate_to(self, url):
+        """Navigate to a specific URL."""
+        self.driver.get(url)
+
+    def get_current_url(self):
+        """Get the current URL of the page."""
+        return self.driver.current_url
+
+    def refresh(self):
+        """Refresh the current page."""
+        self.driver.refresh()
