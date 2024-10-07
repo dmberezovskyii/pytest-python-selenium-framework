@@ -24,7 +24,7 @@ class Singleton(type):
 
 class Logger(metaclass=Singleton):
     def __init__(self, log_lvl=LogLevel.INFO):
-        self._log = logging.getLogger("appium")
+        self._log = logging.getLogger("selenium")
         self._log.setLevel(LogLevel.DEBUG.value)
 
         formatter = logging.Formatter(
@@ -36,7 +36,7 @@ class Logger(metaclass=Singleton):
     def _create_log_file(self):
         current_time = time.strftime("%Y-%m-%d")
         log_directory = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "../src", "tests", "logs")
+            os.path.join(os.path.dirname(__file__), "../tests", "logs")
         )
 
         if not os.path.exists(log_directory):
