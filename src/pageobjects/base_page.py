@@ -8,6 +8,7 @@ from selenium.common.exceptions import (
     TimeoutException, ElementNotVisibleException
 )
 
+from utils.helpers import timing
 from utils.logger import log
 
 # Type alias for locators
@@ -45,18 +46,21 @@ class BasePage:
             WaitType.FLUENT: self._fluent_wait,
         }.get(wait_type, self._wait)
 
+    @timing
     def wait_for(
         self,
         locator: Locator,
-        condition: Literal["clickable", "visible", "present"],
+        condition: Literal["clickable", "visible", "present"] = "visible",
         waiter: Optional[WebDriverWait] = None,
     ) -> WebElement:
+        """Wait for an element"""
         waiter = waiter or self._wait
 
         conditions = {
-            "clickable": EC.element_to_be_clickable(*locator),
-            "visible": EC.visibility_of_element_located(*locator),
-            "present": EC.presence_of_element_located(*locator),
+            "clickable": EC.element_to_be_clickable(locator),
+            # Pass the locator tuple as a single argument
+            "visible": EC.visibility_of_element_located(locator),
+            "present": EC.presence_of_element_located(locator),
         }
 
         if condition not in conditions:
@@ -83,6 +87,8 @@ class BasePage:
         element = self.wait_for(locator, condition=condition, waiter=waiter)
         element.click()
 
+    # @log()
+    # @timing
     def set(
         self, locator: Locator, text: str, wait_type: Optional[WaitType] = None
     ):
@@ -90,10 +96,11 @@ class BasePage:
         Set text in an input field.
         """
         waiter = self._get_waiter(wait_type)
-        element = self.wait_for(locator, condition="visible", waiter=waiter)
+        element = self.wait_for(locator, waiter=waiter)
         element.clear()
         element.send_keys(text)
 
+    @log
     def get_text(
         self, locator: Locator, wait_type: Optional[WaitType] = None
     ) -> str:

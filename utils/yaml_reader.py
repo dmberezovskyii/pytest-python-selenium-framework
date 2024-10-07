@@ -139,7 +139,7 @@ class YAMLReader:
 
 
 # Example usage
-caps = YAMLReader.read_caps("chrome", "caps.yaml")
+# caps = YAMLReader.read_caps("chrome", "caps.yaml")
 # Example usage simple namespace
-simple = YAMLReader.read("data.yaml", to_simple_namespace=True)
-print(simple.users.username1)
+# simple = YAMLReader.read("data.yaml", to_simple_namespace=True)
+# print(simple.users.username1)
