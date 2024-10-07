@@ -26,7 +26,9 @@ def _init_driver_options(dr_type=None):
     options = driver_option_mapping.get(dr_type)
 
     if options is None:
-        raise ErrorHandler.raise_error(ErrorType.UNSUPPORTED_DRIVER_TYPE, dr_type)
+        raise ErrorHandler.raise_error(
+            ErrorType.UNSUPPORTED_DRIVER_TYPE, dr_type
+        )
 
     _shared_driver_options(options)
     log.info(f"Driver options {options.arguments}")

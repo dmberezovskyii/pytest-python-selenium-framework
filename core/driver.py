@@ -18,7 +18,8 @@ def _get_driver_path(driver_type=None):
         ErrorHandler.raise_error(ErrorType.UNSUPPORTED_DRIVER_TYPE)
 
     project_dir = os.path.dirname(
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    )
     driver_path = os.path.join(project_dir, "resources", driver_type)
 
     if not os.path.exists(driver_path):
@@ -31,7 +32,9 @@ def _configure_driver(driver, environment):
     driver.maximize_window()
     driver.implicitly_wait(3)
     driver.get(Properties.get_base_url(environment))
-    log.info(f"Configure driver and base url: {Properties.get_base_url(environment)}")
+    log.info(
+        f"Configure driver and base url: {Properties.get_base_url(environment)}"
+    )
 
 
 class Driver(ABC):
@@ -58,10 +61,12 @@ class LocalDriver(Driver):
                 options=options
             )
             log.info(
-                f"Created local Chrome driver with session: {driver.session_id}")
+                f"Created local Chrome driver with session: {driver.session_id}"
+            )
         except Exception as e:
             log.error(
-                f"Failed to create Chrome driver, falling back to local driver: {e}")
+                f"Failed to create Chrome driver  {e}"
+            )
             driver = webdriver.Chrome(
                 service=ChromeService(_get_driver_path(dr_type)),
                 options=_init_driver_options(dr_type=dr_type),
@@ -78,7 +83,8 @@ class ChromeRemoteDriver(Driver):
             desired_capabilities={"LT:Options": caps},  # noqa
         )
         log.info(
-            f"Remote Chrome driver created with session: {driver.session_id}")
+            f"Remote Chrome driver created with session: {driver.session_id}"
+        )
         return driver
 
 
@@ -86,7 +92,8 @@ class FirefoxDriver(Driver):
     def create_driver(self, environment=None, dr_type=None):
         try:
             driver = webdriver.Firefox(
-                options=_init_driver_options(dr_type=dr_type))
+                options=_init_driver_options(dr_type=dr_type)
+            )
             log.info(f"Created Firefox driver with session: {driver.session_id}")
         except Exception as e:
             driver = webdriver.Chrome(
@@ -94,6 +101,7 @@ class FirefoxDriver(Driver):
                 options=_init_driver_options(dr_type=dr_type),
             )
             log.error(
-                f"Failed to create Firefox driver, falling back to Chrome: {e}")
+                f"Failed to create Firefox driver, falling back to Chrome: {e}"
+            )
         _configure_driver(driver, environment)
         return driver

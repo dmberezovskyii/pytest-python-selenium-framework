@@ -4,6 +4,7 @@ from utils.logger import Logger, LogLevel
 
 log = Logger(log_lvl=LogLevel.INFO).get_instance()
 
+
 class WebDriverFactory:
     DRIVER_MAPPING = {
         "chrome": ChromeRemoteDriver,
@@ -17,6 +18,10 @@ class WebDriverFactory:
         driver_type = driver_type.lower()
         if driver_type in WebDriverFactory.DRIVER_MAPPING:
             driver_class = WebDriverFactory.DRIVER_MAPPING[driver_type]
-            return driver_class().create_driver(environment, driver_type)  # No .value needed
+            return driver_class().create_driver(
+                environment, driver_type
+            )  # No .value needed
         else:
-            raise ErrorHandler.raise_error(ErrorType.ENV_ERROR, environment, driver_type)
+            raise ErrorHandler.raise_error(
+                ErrorType.ENV_ERROR, environment, driver_type
+            )
