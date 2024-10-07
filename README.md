@@ -3,7 +3,7 @@
 
 A simple UI automation framework built with:
 - **Python**: 3.9 - 3.12
-- **pytest**: 7.2.0
+- **pytest**: 8.3.0
 - **Selenium**: 4.24.0
 - **CI**: GitHub Actions
 
