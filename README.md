@@ -1,98 +1,101 @@
+
 # Simple Python Selenium UI Automation Framework
 
-This is a simple UI automation framework built with:
-- Python: 3.9-3.12, pytest 7.2.0, Selenium: 4.24.0 and GitHub Actions CI
-<br>
+A simple UI automation framework built with:
+- **Python**: 3.9 - 3.12
+- **pytest**: 7.2.0
+- **Selenium**: 4.24.0
+- **CI**: GitHub Actions
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/dmytro-berezovskyi/)
 
-
-
 ## Features
 
-- Easy-to-use UI automation framework.
-- Based on popular Python libraries: pytest and Selenium.
-- Supports Chrome,Firefox and Remote browsers for UI testing.
-- Provides utilities for setting up and managing WebDriver instances.
-- Supports GitHub Actions CI workflow for Darwin(Mac) and Linux
-- Supports different environments: dev, stage
-- Supports pytest reports and custom logs
+- User-friendly UI automation framework.
+- Built on popular Python libraries: pytest and Selenium.
+- Supports **Chrome**, **Firefox**, and **Remote** browsers for UI testing.
+- Utilities for setting up and managing WebDriver instances.
+- Integrated with **GitHub Actions** CI workflow for Darwin (Mac) and Linux.
+- Supports multiple environments: **dev**, **stage**.
+- Generates **pytest reports** and **custom logs**.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python 3.8-3.12
-- Note, if you are not using MacOS with arm64 architecture or Selenium version below 4.24.0, 
-*upload the appropriate driver corresponding to your OS to the resources directory*
+- Python 3.8 - 3.12
+- If you're not using macOS with ARM64 architecture or a Selenium version below 4.24.0, please upload the appropriate driver corresponding to your OS to the `resources` directory.
 
-### Usage locally
+### Local Usage
 
-1. Clone this repository
-2. Install required dependencies with
- ```shell
+1. Clone this repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Install required dependencies:
+   ```bash
    pip install poetry
    poetry shell
    poetry install
-   pip install -r requirements.txt
    ```
-3. Create .env file and add 
-4. Download driver to resources directory:
-   - rename chromedriver to local if you want to run tests locally
-```
-DEV_URL = "your-dev-project-url"
-STAG_URL = "your-staging-project-url"
-```
-4. If you don't want to use environment variables, add your references to the properties file
-```
-class Properties:
-     _ENV_VARIABLES = {
-        "dev": ("DEV_URL", ""),
-        "stag": ("STAG_URL", ""),
-        # Add more environments and their default URLs as needed
-    }
-```
+3. Create a `.env` file and add:
+   ```plaintext
+   DEV_URL = "your-dev-project-url"
+   STAG_URL = "your-staging-project-url"
+   ```
+   - Rename the `chromedriver` to `local` if you want to run tests locally.
 
-### Latest drivers
+4. If you prefer not to use environment variables, add your references to the properties file:
+   ```python
+   class Properties:
+       _ENV_VARIABLES = {
+           "dev": ("DEV_URL", ""),
+           "stag": ("STAG_URL", ""),
+           # Add more environments and their default URLs as needed
+       }
+   ```
+
+### Latest Drivers
+
 - #### [Chrome Drivers](https://googlechromelabs.github.io/chrome-for-testing/#stable)
 - #### [Firefox Drivers](https://github.com/mozilla/geckodriver)
-- It is possible to download the latest version of the driver for MacOS arch64 using chromedriver.sh located in the resources folder
-
+- You can download the latest version of the driver for macOS ARM64 using the `chromedriver.sh` script located in the `resources` folder.
 
 ### TODO
 
-| Item                                                 | Status                                                   |
-|------------------------------------------------------|----------------------------------------------------------|
-| 1. drivers factory: local, remote, [chrome, firefox] | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
-| 2. pytest.ini config: addopts, errors, markers       | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
-| 3. environments: dev, stag, prod                     | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
-| 4. secrets                                           | ![Status](https://img.shields.io/badge/TODO-yellow)      |
-| 5. utilities: yaml_reader, logger                    | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
-| 6. BasePage: wait strategy, base actions             | ![Status](https://img.shields.io/badge/DONE-brightgreen) |
-| 7. Properties: make properties helper                | ![Status](https://img.shields.io/badge/DONE-brightgreen) |
-| 8. CI: GitHub Actions: runs tests, publish reports   | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| Item                                                                                                        | Status                                                   |
+|-------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|
+| 1. Drivers factory: local, remote, [Chrome, Firefox]                                                      | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 2. `pytest.ini` config: addopts, errors, markers                                                          | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 3. Environments: dev, stag, prod                                                                          | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 4. Secrets                                                                                                | ![Status](https://img.shields.io/badge/TODO-yellow)      |
+| 5. Utilities: YAML reader, logger                                                                          | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 6. BasePage: wait strategy, base actions                                                                  | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 7. Properties: make properties helper                                                                       | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
+| 8. CI: GitHub Actions: run tests, publish reports, take screenshots on failure (check test summary artifacts) | ![Status](https://img.shields.io/badge/DONE-brightgreen)      |
 
 ### CI: GitHub Actions
-#### *Pay attention*
- - While running CI on your local, git resources must contain proper chrome driver with x86_64 architecture 
-   - (unless you are using selenium version 4.11.0 and higher)
- - Go to repository settings -> secrets and variables -> actions -> variables and add DEV_URL, STAG_URL
- - Added CI configuration to run tests for ubuntu *run_test_ubuntu.yaml*
- 
-### Local: Ruff lint configuration
-Linting Rules: The configuration defines a set of rules that dictate which linting checks are performed. 
-You can customize these rules to suit the project's coding style and requirements.
- - Create External tools to run linting
- - Working directory
-```
-$ProjectFileDir$
-```
- - Program
-```
-path to your ruff installed /bin/ruff 
-```
- - Arguments 
-```
-$FilePathRelativeToProjectRoot$ --config .ruff.toml
-```
 
+#### *Important Notes*
+
+- When running CI locally, ensure your Git resources contain the correct Chrome driver with x86_64 architecture (unless using Selenium version 4.11.0 or higher).
+- Go to **Repository Settings** -> **Secrets and Variables** -> **Actions** -> **Variables**, and add `DEV_URL`, `STAG_URL`.
+- CI configuration is available for running tests on Ubuntu in `run_test_ubuntu.yaml`.
+
+### Local: Ruff Lint Configuration
+
+The linting configuration defines rules that dictate the checks performed. Customize these rules to suit your project's coding style and requirements.
+
+1. Create external tools to run linting.
+2. Set the working directory to:
+   ```plaintext
+   $ProjectFileDir$
+   ```
+3. Specify the program:
+   ```plaintext
+   path to your ruff installed /bin/ruff 
+   ```
+4. Provide the arguments:
+   ```plaintext
+   $FilePathRelativeToProjectRoot$ --config .ruff.toml
+   ```
