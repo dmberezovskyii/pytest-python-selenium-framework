@@ -54,24 +54,6 @@ A simple UI automation framework built with:
            # Add more environments and their default URLs as needed
        }
    ```
-5. Setup github env for CI GitHib Actions
-   - Go to repo settings
-   - Go to Secrets and Variables
-   - Add New Environment Variables:
-     - Click the "New repository variable" button. 
-     - In the "Name" field, enter the desired variable name:
-     - For development environment: DEV_URL 
-     - For staging environment: STAGE_URL 
-     - In the "Value" field, input the corresponding URL (e.g., https://dev.example.com or https://stage.example.com). 
-     - Click "Add variable" to save your changes.
-   ```
-   jobs:
-      selenium-tests:
-        runs-on: macos-latest
-        env:
-          DEV_URL: ${{ vars.DEV_URL }}
-          STAG_URL: ${{ vars.STAG_URL }}
-   ```
     
 ### Latest Drivers
 
@@ -96,9 +78,17 @@ A simple UI automation framework built with:
 
 #### *Important Notes*
 
-- When running CI locally, ensure your Git resources contain the correct Chrome driver with x86_64 architecture (unless using Selenium version 4.11.0 or higher).
+- When running CI locally, ensure your Git resources contain the correct Chrome driver with x86_64 architecture (unless using Selenium version 4.24.0 or higher).
 - Go to **Repository Settings** -> **Secrets and Variables** -> **Actions** -> **Variables**, and add `DEV_URL`, `STAG_URL`.
 - CI configuration is available for running tests on Ubuntu in `run_test_ubuntu.yaml`.
+- ```
+   jobs:
+      selenium-tests:
+        runs-on: macos-latest
+        env:
+          DEV_URL: ${{ vars.DEV_URL }}
+          STAG_URL: ${{ vars.STAG_URL }}
+   ```
 
 ### Local: Ruff Lint Configuration
 
