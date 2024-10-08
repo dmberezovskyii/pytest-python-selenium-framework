@@ -24,6 +24,13 @@ jobs:
         with:
           python-version: "3.10"
 
+      # Clear Poetry cache
+      - name: Clear Poetry cache
+        run: |
+          poetry cache clear --all pypoetry
+          poetry cache clear --all virtualenvs
+
+      # Install Chrome and WebDriver if not already installed
       - name: Install Chrome and WebDriver if not already installed
         run: |
           if ! command -v google-chrome &>/dev/null; then
