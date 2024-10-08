@@ -54,7 +54,25 @@ A simple UI automation framework built with:
            # Add more environments and their default URLs as needed
        }
    ```
-
+5. Setup github env for CI GitHib Actions
+   - Go to repo settings
+   - Go to Secrets and Variables
+   - Add New Environment Variables:
+     - Click the "New repository variable" button. 
+     - In the "Name" field, enter the desired variable name:
+     - For development environment: DEV_URL 
+     - For staging environment: STAGE_URL 
+     - In the "Value" field, input the corresponding URL (e.g., https://dev.example.com or https://stage.example.com). 
+     - Click "Add variable" to save your changes.
+   ```
+   jobs:
+      selenium-tests:
+        runs-on: macos-latest
+        env:
+          DEV_URL: ${{ vars.DEV_URL }}
+          STAG_URL: ${{ vars.STAG_URL }}
+   ```
+    
 ### Latest Drivers
 
 - #### [Chrome Drivers](https://googlechromelabs.github.io/chrome-for-testing/#stable)
