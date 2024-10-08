@@ -1,4 +1,4 @@
-from locators.locators import TextFields
+from src.locators.locators import TextFields
 from pageobjects.base_page import BasePage
 from utils.logger import log
 
