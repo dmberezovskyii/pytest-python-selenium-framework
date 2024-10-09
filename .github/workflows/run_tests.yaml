@@ -1,44 +1,82 @@
-name: Build and Run Tests
+name: Selenium Tests
 
 on:
-  pull_request:
+  workflow_dispatch:  # Allows running manually
+  schedule:
+    - cron: '0 0 * * *'  # Run every day at 00:00 UTC
 
 jobs:
-  build:
-    name: Build and Run Tests
-    runs-on: ubuntu-latest
+  selenium-tests:
+    runs-on: macos-latest
+    env:
+      DEV_URL: ${{ vars.DEV_URL }}
+      STAG_URL: ${{ vars.STAG_URL }}
+
+    permissions:
+      checks: write
 
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v3
         with:
-          python-version: "3.10"
+          python-version: "3.12"
 
       - name: Cache Dependencies
         uses: actions/cache@v3
         with:
-          path: ~/.cache/pip
-          key: python-cache-${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+          path: |
+            ~/.cache/pip
+            .venv
+          key: python-cache-${{ runner.os }}-${{ hashFiles('poetry.lock') }}
           restore-keys: |
             python-cache-${{ runner.os }}-
 
-      - name: Install Dependencies
+      - name: Install Chrome and WebDriver if not already installed
+        run: |
+          if ! command -v google-chrome &>/dev/null; then
+            echo "Installing Chrome"
+            brew install --cask google-chrome
+          else
+            echo "Chrome is already installed"
+          fi
+
+      - name: Install Poetry
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install poetry
 
-      - name: Run Tests
+      - name: Install dependencies with Poetry
         run: |
-          pytest --junit-xml=build/test-results/test/TEST-results.xml --verbose
-        continue-on-error: true  # Ensures that test results are collected even if some tests fail
+          poetry install
 
-      - name: Upload Test Report
+      - name: Run Selenium Tests
+        run: |
+          poetry run pytest --verbose --junit-xml=reports/test-results.xml --capture=tee-sys
+        continue-on-error: true  # Ensure other steps run even if tests fail
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
+        if: always()  # Always run this step, even if tests fail
+        with:
+          report_paths: 'reports/test-results.xml'
+          detailed_summary: true
+          include_passed: true
+          check_name: 'Test Results'
+
+      - name: Upload Screenshots
+        if: failure()
         uses: actions/upload-artifact@v3
-        if: always()  # Always run this step even if tests fail
+        with:
+          name: screenshots
+          path: reports/screenshots/*
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v3
         with:
           name: junit-test-results
-          path: build/test-results/test/TEST-results.xml
+          path: reports/test-results.xml
           retention-days: 1
