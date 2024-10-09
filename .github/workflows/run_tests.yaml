@@ -65,6 +65,7 @@ jobs:
           detailed_summary: true
           include_passed: true
           check_name: 'Test Results'
+          follow_symlink: True
 
       - name: Upload Screenshots
         if: failure()
